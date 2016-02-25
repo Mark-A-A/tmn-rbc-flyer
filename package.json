@@ -1,0 +1,20 @@
+{
+  "name": "tmn-rutgers-flyer-app",
+  "version": "1.0.0",
+  "description": "Rutgers Flyer App with Social Page",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mark-A-A/tmn-rbc-flyer.git"
+  },
+  "author": "Mark A., Neelesh T., Terrence H.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mark-A-A/tmn-rbc-flyer/issues"
+  },
+  "homepage": "https://github.com/Mark-A-A/tmn-rbc-flyer#readme"
+}
