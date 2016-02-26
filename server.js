@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+app.get("/", function (req, res){
+  console.log("hit home page")
+  res.send("Hello World ")
+});
 
 app.listen(PORT, function (){
   console.log("Server listening on Port %s", PORT);
