@@ -11,7 +11,12 @@ var connection = mysql.createConnection(process.env.JAWSDB_URL || {
   user     : 'root',
   database : 'virtual_flyer_db'
 });
- 
+
+
+// var Sequelize = require('sequelize');
+// var connection = new Sequelize('user_authentication_db', 'root');
+
+
 connection.connect();
  
 connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
@@ -20,7 +25,6 @@ connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
   console.log('The solution is: ', rows[0].solution);
 });
 
- 
 
 
 module.exports = connection;
