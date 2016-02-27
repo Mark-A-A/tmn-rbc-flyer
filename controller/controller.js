@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 var flyerMethods = require('../model/flyer.js')
@@ -38,5 +37,10 @@ router.get('/dashboard', function (req, res) {
     //res.render('home', rutgersTableData);
     res.send("You are on the dashboard page");
   });
+});
+
+router.get('/register', function (req, res){
+  console.log("hi");
+  res.render('register');
 });
 module.exports = router;
