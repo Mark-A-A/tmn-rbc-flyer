@@ -1,5 +1,4 @@
 console.log("PORT: "+ process.env.PORT);
-
 var PORT = process.env.PORT || 4040;
 console.log(PORT); //checking for local port
 var express = require('express');
@@ -26,10 +25,10 @@ app.set('view engine', 'handlebars');
 app.use(methodOverride('_method'));
 
 
-// app.get("/", function (req, res){
-//   console.log("hit home page")
-//   res.render("home", );
-// });
+app.get("/", function (req, res){
+  console.log("hit home page")
+  res.render("home");
+});
 
 app.use("/", router);
 // app.use("/register", router);
