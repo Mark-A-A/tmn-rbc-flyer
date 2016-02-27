@@ -1,10 +1,9 @@
 console.log("PORT: "+ process.env.PORT);
-
 var PORT = process.env.PORT || 4040;
 console.log(PORT); //checking for local port
 var express = require('express');
 var exphbs  = require('express-handlebars');
-var router = require('./controller/controller.js');
+// var router = require('./controller/controller.js');
 
 var bodyParser = require('body-parser');
 
@@ -27,7 +26,7 @@ app.use(methodOverride('_method'));
 
 app.get("/", function (req, res){
   console.log("hit home page")
-  res.render("home", );
+  res.render("home");
 });
 
 // app.use("/", router);
