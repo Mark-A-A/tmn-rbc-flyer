@@ -14,10 +14,10 @@ router.get('/', function (req, res) {
 
   //   console.log("rutgersTableData");
   //   //res.redirect("/");
-  //   //res.render('home', rutgersTableData);
+  res.render('home');
   //   res.send("You are on the home page");
   // });
-   res.send("You are on the home page");
+   //res.send("You are on the home page");
 });
 
 router.get('/dashboard', function (req, res) {
