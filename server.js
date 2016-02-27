@@ -29,11 +29,12 @@ app.get("/", function (req, res){
   res.render("home");
 });
 
-// app.use("/", router);
+app.use("/", router);
 // app.use("/register", router);
 // app.use("/login", router);
 // app.use("/dashboard", router);
 
 app.listen(PORT, function (){
+  debugger
   console.log("Server listening on Port %s", PORT);
 });
