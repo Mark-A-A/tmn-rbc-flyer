@@ -3,7 +3,7 @@ var PORT = process.env.PORT || 4040;
 console.log(PORT); //checking for local port
 var express = require('express');
 var exphbs  = require('express-handlebars');
-// var router = require('./controller/controller.js');
+var router = require('./controller/controller.js');
 
 var bodyParser = require('body-parser');
 

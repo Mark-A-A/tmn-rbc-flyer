@@ -38,4 +38,9 @@ router.get('/dashboard', function (req, res) {
     res.send("You are on the dashboard page");
   });
 });
+
+router.get('/register', function (req, res){
+  console.log("hi");
+  res.render('register');
+});
 module.exports = router;
