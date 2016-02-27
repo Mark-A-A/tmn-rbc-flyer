@@ -25,16 +25,17 @@ app.set('view engine', 'handlebars');
 app.use(methodOverride('_method'));
 
 
-app.get("/", function (req, res){
-  console.log("hit home page")
-  res.render("home", );
-});
+// app.get("/", function (req, res){
+//   console.log("hit home page")
+//   res.render("home", );
+// });
 
-// app.use("/", router);
+app.use("/", router);
 // app.use("/register", router);
 // app.use("/login", router);
 // app.use("/dashboard", router);
 
 app.listen(PORT, function (){
+  debugger
   console.log("Server listening on Port %s", PORT);
 });
