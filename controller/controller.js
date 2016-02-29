@@ -1,6 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var flyerMethods = require('../model/flyer.js')
+var app = express();
+
+app.use(require('serve-static')(__dirname + '/../../public'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 router.get('/', function (req, res) {
   debugger
@@ -19,6 +28,15 @@ router.get('/', function (req, res) {
   // });
    //res.send("You are on the home page");
 });
+
+
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+
 
 router.get('/dashboard', function (req, res) {
   debugger
