@@ -33,3 +33,7 @@ lastModified timestamp NOT NULL DEFAULT now() on update now()
 authenticated boolean DEFAULT 0 NOT NULL
 
 );
+
+
+-- Events
+-- Venues
