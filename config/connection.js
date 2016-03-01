@@ -4,16 +4,18 @@ MySQL Connection to DB
 debugger
 
 var Sequelize = require('sequelize');
+var PORT = process.env.PORT || 4040;
 
-//Local or Heroku AWS
+Local or Heroku AWS
 if(process.env.NODE_ENV === 'production') {
   // HEROKU DB
   console.log(process.env.JAWSDB_URL);
   var connection = new Sequelize(process.env.JAWSDB_URL);
 } else {
-  // LOCAL DB
+  LOCAL DB
+  var Sequelize = require('sequelize');  
   var connection = new Sequelize('virtual_flyer_db', 'root');
-};
+;
 
 /*
 Model
@@ -57,5 +59,48 @@ var db = {
 // User.findOne().then(function (user) {
 //     console.log(user.name);
 // });
+
+
+var Test_User = connection.define('test_user', {
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [5,20],
+        msg: "Your password must be between 5-20 characters"
+      },
+    }
+  },
+  instructor_type: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+// }, {
+//   hooks: {
+//     beforeCreate: function(input){
+//       input.password = bcrypt.hashSync(input.password, 10);
+//     }
+//   }
+});
+
+connection.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("Listening on port %s", PORT);
+  });
+});
 
 module.exports = db;
