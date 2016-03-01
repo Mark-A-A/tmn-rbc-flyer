@@ -2,7 +2,7 @@ CREATE DATABASE virtual_flyer_db;
 USE virtual_flyer_db;
 
 
-CREATE TABLE users (
+CREATE TABLE users_test2 (
 id int NOT NULL AUTO_INCREMENT,
 first_name varchar(255) NOT NULL,
 last_name varchar(255) NOT NULL,
@@ -13,10 +13,11 @@ location varchar(255) NOT NULL,
 student boolean DEFAULT 0 NOT NULL,
 teacher boolean DEFAULT 0 NOT NULL,
 createdDate timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-lastModified timestamp NOT NULL DEFAULT now() on update now()
-authenticated boolean DEFAULT 0 NOT NULL
-
+lastModified timestamp NOT NULL DEFAULT now() on update now(),
+authenticated boolean DEFAULT 0 NOT NULL,
+PRIMARY KEY (id)
 );
+
 
 CREATE TABLE posts (
 id int NOT NULL AUTO_INCREMENT,

@@ -1,10 +1,9 @@
 /*
 MySQL Connection to DB
 */
+debugger
 
-
-//requiring mysql package
-var mysql      = require('mysql');
+var Sequelize = require('sequelize');
 
 //Local or Heroku AWS
 if(process.env.NODE_ENV === 'production') {
@@ -16,62 +15,47 @@ if(process.env.NODE_ENV === 'production') {
   var connection = new Sequelize('virtual_flyer_db', 'root');
 };
 
-// var connection = mysql.createConnection(process.env.JAWSDB_URL || {
-//   host     : 'localhost',
-//   user     : 'root',
-//   database : 'virtual_flyer_db'
-// });
-
-
-
-
-// var Sequelize = require('sequelize');
-// var connection = new Sequelize('user_authentication_db', 'root');
-
-
-connection.connect();
- 
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-  if (err) throw err;
-  console.log("Connection to DB made")
-  console.log('The solution is: ', rows[0].solution);
-});
-
+/*
+Model
+*/
 
 //Registration
 var User = connection.define('user', {
- first_name: {
-  Sequelize.STRING
- },
- last_name: {
-  Sequelize.STRING
- },
- student:{
-  Sequelize.BOOLEAN
- },
- teacher:{
-  Sequelize.BOOLEAN
- },
- city:{
-  Sequelize.STRING
- },
- state: {
-  Sequelize.STRING
- },
- email:{
+ first_name: Sequelize.STRING,
+ last_name: Sequelize.STRING,
+ student: Sequelize.BOOLEAN,
+ teacher: Sequelize.BOOLEAN,
+ city: Sequelize.STRING,
+ state: Sequelize.STRING,
+ email: {
   type: Sequelize.STRING,
-    unique: true
- },
- password:{
-  Sequelize.STRING
- },
- authenticated:{
-  Sequelize.BOOLEAN
- }
-})
+  unique: true,
+  allowNull: false
+  //validate
+  // validate: {
+  //   notEmpty: true,
+  //   len: {  //set validation range and error message
+  //     arguments: [1,25],
+  //     message: "Please enter an email "
 
-
-User.findOne().then(function (user) {
-    console.log(user.name);
+  //   },
+ },
+ password: Sequelize.STRING,
+ authenticated: Sequelize.BOOLEAN
 });
-module.exports = connection;
+
+// var Place = connection.define('place', {
+
+// });
+
+var db = {
+  User: User,
+  //Place: Place,
+  connection: connection
+}
+
+// User.findOne().then(function (user) {
+//     console.log(user.name);
+// });
+
+module.exports = db;
