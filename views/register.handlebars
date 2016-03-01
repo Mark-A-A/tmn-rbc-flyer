@@ -1,13 +1,13 @@
 <div class="row">
  <div class="col-md-12">
-    <div class="jumbotron">
-      <h1>Registration</h1>
-    </div>
+  <div class="jumbotron">
+    <h1>Registration</h1>
   </div>
+</div>
 </div>
 <div class="row">
   <div class="col-md-6">
-    <form method="POST" action="/instructor-info">
+    <form method="POST" action="/register-info">
       <div class="form-group">
         <label for="exampleInputEmail1">First Name</label>
         <input type="text" class="form-control" name="firstname">
@@ -18,7 +18,7 @@
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">Email</label>
-        <input type="text" class="form-control" name="lastname">
+        <input type="text" class="form-control" name="email">
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">Username</label>
@@ -27,6 +27,13 @@
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         <input type="password" class="form-control" name="password">
+      </div>
+      <div class="form-group">
+        <label>User Type:</label>
+        <select type="text" class="form-control" name="user_type">
+          <option>Promoter</option>
+          <option>Attendee</option>
+        </select>
       </div>
       <br/>
       <button type="submit" class="btn btn-default">Submit</button>

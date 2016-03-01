@@ -4,11 +4,11 @@ var flyerMethods = require('../model/flyer.js')
 var app = express();
 
 app.use(require('serve-static')(__dirname + '/../../public'));
-app.use(require('cookie-parser')());
+// app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 router.get('/', function (req, res) {
@@ -30,11 +30,11 @@ router.get('/', function (req, res) {
 });
 
 
-router.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+// router.post('/login', 
+//   passport.authenticate('local', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
 
 
 
