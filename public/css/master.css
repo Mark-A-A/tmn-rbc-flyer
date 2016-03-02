@@ -1,9 +1,13 @@
-html,
-body {
+html, body {
   height: 100%;
   padding-top:50px;
 }
 
+#rutgers-banner {
+  
+  font-family: 'Kaushan Script', cursive;
+  /*font-weight: 24;*/
+}
 .row {
   margin-left:0px;
   margin-right:0px;

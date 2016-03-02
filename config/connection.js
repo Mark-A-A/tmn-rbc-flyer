@@ -6,16 +6,17 @@ debugger
 var Sequelize = require('sequelize');
 var PORT = process.env.PORT || 4040;
 
-Local or Heroku AWS
+//Local or Heroku AWS
 if(process.env.NODE_ENV === 'production') {
   // HEROKU DB
   console.log(process.env.JAWSDB_URL);
   var connection = new Sequelize(process.env.JAWSDB_URL);
-} else {
-  LOCAL DB
+  } else {
+  //LOCAL DB
   var Sequelize = require('sequelize');  
   var connection = new Sequelize('virtual_flyer_db', 'root');
-;
+};
+
 
 /*
 Model
@@ -50,11 +51,13 @@ var User = connection.define('user', {
 
 // });
 
+
+//Creating db connection object to export to main 
 var db = {
   User: User,
   //Place: Place,
   connection: connection
-}
+}; //end of db object
 
 // User.findOne().then(function (user) {
 //     console.log(user.name);
@@ -95,12 +98,8 @@ var Test_User = connection.define('test_user', {
 //       input.password = bcrypt.hashSync(input.password, 10);
 //     }
 //   }
-});
+}); //end of test user
 
-connection.sync().then(function() {
-  app.listen(PORT, function() {
-    console.log("Listening on port %s", PORT);
-  });
-});
+
 
 module.exports = db;

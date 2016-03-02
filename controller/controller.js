@@ -1,22 +1,35 @@
 var express = require('express');
+
 var router = express.Router();
-// var flyerMethods = require('../model/flyer.js')
-var app = express();
+
+var session = require('express-session')
+
+var cookieParser = require('cookie-parser')
+
+var bodyParser = require('body-parser');
+
 var passport = require('passport');
 
+var serveStatic = require('serve-static');
 
-// app.use(require('serve-static')(__dirname + '/../../public'));
-// app.use(require('cookie-parser')());
-// app.use(require('body-parser').urlencoded({ extended: true }));
-// app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+var app = express();
 
-app.use(require('serve-static')(__dirname + '/../../public'));
-// app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
+//initializing node packages for Middleware
+
+app.use(serveStatic(__dirname + '/public'));
+
+//Parse the body of responses
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//Middleware for Session
+//Session ID
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+//For parsing cookie information - Ex: console.log("Cookies: ", req.cookies)
+app.use(cookieParser());
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+//Starting Passport Authentication
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 router.get('/', function (req, res) {
@@ -86,4 +99,5 @@ router.get('/register', function (req, res){
   console.log("hi");
   res.render('register');
 });
+
 module.exports = router;
