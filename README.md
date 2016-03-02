@@ -2,7 +2,7 @@ Rugters Flyer App
 ========
 Contributors:   
 Neelesh Tekal    
-Terrence Hernriquez
+Terrence Hernriquez    
 Mark Awai   
 
 --------
