@@ -33,15 +33,23 @@ app.use(passport.session());
 
 
 router.get('/', function (req, res) {
-  console.log("Cpntroller: hitting  home page");
+  debugger
+  console.log("Controller: hitting  home page");
 
   db.User.findAll({}).then(function (dbUsers) {
-    var rutgersUsers = dbUsers;
     console.log(dbUsers);
     
-    console.log("getting data back..Your Data:"+ rutgersUsers);
+    //Creating data objects for handlebars renderings
+    var userTableData = {
+      appUsers: dbUsers
+    }
     
-    res.send(dbUsers);
+    
+    console.log("getting data back..Your Data:"+ userTableData.appUsers);
+    
+    //res.send(dbUsers);
+    res.render("home")
+
   });
 }); //end of home route
 
