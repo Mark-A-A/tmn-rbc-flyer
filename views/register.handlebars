@@ -7,7 +7,7 @@
 </div>
 <div class="row">
   <div class="col-md-6">
-    <form method="POST" action="/register-info">
+    <form method="POST" action="/register">
       <div class="form-group">
         <label for="exampleInputEmail1">First Name</label>
         <input type="text" class="form-control" name="firstname">
@@ -31,8 +31,9 @@
       <div class="form-group">
         <label>User Type:</label>
         <select type="text" class="form-control" name="user_type">
+          <option>Student</option>
+          <option>Teacher</option>
           <option>Promoter</option>
-          <option>Attendee</option>
         </select>
       </div>
       <br/>

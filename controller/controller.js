@@ -53,29 +53,29 @@ router.get('/', function (req, res) {
   });
 }); //end of home route
 
-  
-  // flyerMethods.allData(function (rutgersData) {
-  //   debugger
-  //   console.log("rutgersData from ORM: " + rutgersData);
-  //   //Data Object for handlebars
+ 
+
+//Registration Page
+router.get('/register', function (req, res){
+  console.log("hi");
+  res.render('register');
+});
+
+//Log In
+router.get('/login', function (req, res) {
+  debugger
+  console.log("Controller: hitting  login page");
+
+  //db.User.findAll({}).then(function (dbUsers) {
+  //console.log(dbUsers);
     
-  //   var rutgersTableData = {
-  //     rutgersUsers: rutgersData
-  //   };
+  //console.log("getting data back..Your Data:"+ userTableData.appUsers);
+  //}); 
 
-  //   console.log("rutgers Data from Table: " + rutgersData);
-
-  // //   //res.redirect("/");
-  //   res.send(rutgersTableData);
-  //   //res.render('home', );
-  // //   res.send("You are on the home page");
-  // // });
-  //  //res.send("You are on the home page");
-  // }); //end of DB callback
-
-
-
-
+    //res.send(dbUsers);
+    res.render("login");
+  
+})
 // router.post('/login', 
 //   passport.authenticate('local', { failureRedirect: '/login' }),
 //   function(req, res) {
@@ -103,9 +103,34 @@ router.get('/dashboard', function (req, res) {
   });
 });
 
-router.get('/register', function (req, res){
-  console.log("hi");
-  res.render('register');
-});
 
 module.exports = router;
+
+
+
+
+
+/*  Scrap Code
+ 
+  // flyerMethods.allData(function (rutgersData) {
+  //   debugger
+  //   console.log("rutgersData from ORM: " + rutgersData);
+  //   //Data Object for handlebars
+    
+  //   var rutgersTableData = {
+  //     rutgersUsers: rutgersData
+  //   };
+
+  //   console.log("rutgers Data from Table: " + rutgersData);
+
+  // //   //res.redirect("/");
+  //   res.send(rutgersTableData);
+  //   //res.render('home', );
+  // //   res.send("You are on the home page");
+  // // });
+  //  //res.send("You are on the home page");
+  // }); //end of DB callback
+
+*/
+
+
