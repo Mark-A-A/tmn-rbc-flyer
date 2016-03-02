@@ -1,3 +1,6 @@
+global.db = require('./config/connection.js')
+var router = require('./controller/controller.js');
+
 console.log("PORT: "+ process.env.PORT);
 var PORT = process.env.PORT || 4040;
 console.log(PORT); //checking for local port
@@ -6,8 +9,7 @@ var express = require('express');
 var exphbs  = require('express-handlebars');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
-global.db = require('./config/connection.js')
-var router = require('./controller/controller.js');
+var serveStatic = require('serve-static');
 
 var app = express();
 
