@@ -5,13 +5,15 @@
 }
 
 .jumbotron {
+  background-image: url("/pictures/redbanner-gradiant.png");
   position: relative;
   padding-top: 15px;
   /*padding-bottom: 0;*/
   /*margin: 0 auto;*/
-  background-image: url("/pictures/redbanner-gradiant.png");
+  
 
   height: 175px;
+  /*transform:translateY(-25px);*/
 }
 
 .jumbtron > img {
