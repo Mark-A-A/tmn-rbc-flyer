@@ -1,3 +1,5 @@
+global.db = require('../config/connection.js');
+
 var express = require('express');
 
 var router = express.Router();
@@ -10,6 +12,8 @@ var bodyParser = require('body-parser');
 
 var passport = require('passport');
 var passportLocal = require('passport-local');
+
+var bcrypt = require('bcryptjs');
 
 var serveStatic = require('serve-static');
 
@@ -104,11 +108,36 @@ router.post('/register', function (req, res) {
   //Parse the body of the request from the form
   console.log(req.body.username);
   console.log(req.body.password);
-  var userToRegister = req.body.username;
-  res.send(req.body);
+  var userToRegister  = req.body.username;
+  var userFirstName   = req.body.firstname;
+  var userLastName    = req.body.lastname;
+  var userLocation    = req.body.location;
+  var userName        =req.body.username;
+  var userEmail       = req.body.email;
+  var userPW          = req.body.password;
+  var userType        = req.body.user_type;
+  //res.send(req.body);
+  db.User.create({
+    firstname: userFirstName,
+    lastname: userLastName,
+    location: userLocation,
+    username: userName,
+    email: userEmail,
+    password: userPW,
+    user_type: userType
+
+  }).then(function (result) {
+    debugger
+    console.log("successful registration")
+    //res.redirect('/success');
+    res.send("you created a user..check db and table");
+  }).catch(function (err){
+    debugger
+    console.log(err);
+    res.redirect('/register/?msg='+'failed to register');
+  });
+
 });
-
-
 
 //Log In
 router.get('/login', function (req, res) {

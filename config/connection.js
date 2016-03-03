@@ -4,6 +4,7 @@ MySQL Connection to DB
 debugger
 
 var Sequelize = require('sequelize');
+var bcrypt = require('bcryptjs');
 
 //Local or Heroku AWS
 if(process.env.NODE_ENV === 'production') {
@@ -22,7 +23,7 @@ Model
 
 //Registration
 //models
-var User_test3 = connection.define('app-users', {
+var User_test = connection.define('app-users', {
   firstname: {
     type: Sequelize.STRING,
     allowNull: false
@@ -66,7 +67,7 @@ var User_test3 = connection.define('app-users', {
   }, 
 }, {
   hooks: {
-    beforeCreate: function(input) {
+    beforeCreate: function (input) {
       input.password = bcrypt.hashSync(input.password, 10);
     }
   }
@@ -98,7 +99,7 @@ var Event = connection.define('event',{
 
 //Creating db connection object to export to main 
 var db = {
-  User: User_test3,
+  User: User_test,
   //Place: Place,
   connection: connection
 }; //end of db object
