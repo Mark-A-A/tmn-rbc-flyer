@@ -20,7 +20,7 @@ var serveStatic = require('serve-static');
 var app = express();
 
 //initializing node packages for Middleware
-
+//using servestaic for static files
 app.use(serveStatic(__dirname + '/public'));
 
 //Parse the body of responses
@@ -40,7 +40,7 @@ app.use(passport.session());
 passport.use(new passportLocal.Strategy(
   function (username, password, done) {
     //check password in db
-    User.findOne({
+    User_test.findOne({
         where: {
             username: username
         }
@@ -154,13 +154,17 @@ router.get('/login', function (req, res) {
     res.render("login");
   
 })
-router.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/dashboard/$msg='+ "successful login");
-});
+router.post('/login', passport.authenticate('local', { 
+  successRedirect: '/dashboard',
+  failureRedirect: '/?msg=Login Credentials do not work'
+  
+}));
 
 
+//check login with db
+app.post('/check', passport.authenticate('local', {
+    
+}));
 
 router.get('/dashboard', function (req, res) {
   debugger
