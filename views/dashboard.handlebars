@@ -20,61 +20,55 @@
   <div class="row">
     <div class="col-md-6">
       <h2>Events</h2>
-    </div>
-    <div class="dashboard-post">
-        <form action="/create" method="POST">
-          <div class="form-group">
-            <div class="col-md-5">
-            <!-- <label for="exampleInput1">Make a post:</label> -->
-              <input type="text" name="postToAdd" class="form-control" id="exampleInput1" placeholder="Type your post">
-            </div>
-            <div class="col-md-1 ">
-              <button type="submit" class="btn btn-default">Post</button>
-            </div>
+
+      {{#each post}}
+        <div class="row ">
+          <div class="col-md-6"> 
+            <pre>{{id}}. {{user_post}}  </pre><!-- {{devoured}} --><!-- {{devoured}} {{date}} -->
+          </div>
+          <div class="col-md-1"><!-- col-md-offset-1  -->
+          <!--     <form action="/delete/{{id}}?_method=DELETE" method="POST">
+                <input type="hidden"  name="burgerID"value="DELETE">
+                <input type="hidden" name="_method" value="{{id}}">
+                <button type="submit" class="btn btn-lg">Delete</button>
+              </form> -->
+            <form method="POST" action="/delete/{{id}}" enctype="application/x-www-form-urlencoded">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit">Delete resource</button>
+            </form>
+          </div>
+       
           
-        </form>
-      </div> 
+          <div class="col-md-1">
+            <form action="/dashboard/{{id}}" method="POST">
+              <input type="hidden" name="_method" value="POST">
+              <input type="hidden" name="_token" value="{{id}}">
+              <button type="submit" class="btn btn-lg">Delete Post</button>
+            </form>
+          </div>
+
+        </div>
+      {{/each}}
+    </div> <!-- end of column-md-6 -->
+
+    <div class="dashboard-post">
+      <form action="/create" method="POST">
+        <div class="form-group">
+          <div class="col-md-5">
+          <!-- <label for="exampleInput1">Make a post:</label> -->
+            <input type="text" name="postToAdd" class="form-control" id="exampleInput1" placeholder="Type your post">
+          </div>
+          <div class="col-md-1 ">
+            <button type="submit" class="btn btn-default">Post</button>
+          </div>
+        </div> 
+      </form> <!-- end of form -->
     </div> <!--end of dashboard-post -->
-    
   </div> <!-- end of row -->
 
   
  
 
-  {{#each posts}}
-    <div class="row ">
-
-      {{#if posted}}
-      <div class="col-md-6 col-md-offset-6 posted"> 
-        <pre>{{id}}. {{user_post}}  </pre><!-- {{devoured}} --><!-- {{devoured}} {{date}} -->
-      </div>
-      <div class="col-md-1"><!-- col-md-offset-1  -->
-      <!--     <form action="/delete/{{id}}?_method=DELETE" method="POST">
-            <input type="hidden"  name="burgerID"value="DELETE">
-            <input type="hidden" name="_method" value="{{id}}">
-            <button type="submit" class="btn btn-lg">Delete</button>
-          </form> -->
-        <form method="POST" action="/delete/{{id}}" enctype="application/x-www-form-urlencoded">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit">Delete resource</button>
-        </form>
-      </div>
-      {{else}}
-      <div class="col-md-3">
-        <pre>{{id}}. {{post_id}}  </pre><!-- {{devoured}} --><!-- {{devoured}} {{date}} -->
-      </div>
-      
-      <div class="col-md-1">
-        <form action="/dashboard/{{id}}" method="POST">
-          <input type="hidden" name="_method" value="POST">
-          <input type="hidden" name="_token" value="{{id}}">
-          <button type="submit" class="btn btn-lg">Delete Post</button>
-        </form>
-      </div>
-      {{/if}}
-
-    </div>
-  {{/each}}
 
 </div> <!--  end of container -->
   
