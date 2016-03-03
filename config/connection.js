@@ -1,30 +1,150 @@
 /*
 MySQL Connection to DB
 */
+debugger
+
+var Sequelize = require('sequelize');
+var bcrypt = require('bcryptjs');
+
+//Local or Heroku AWS
+if(process.env.NODE_ENV === 'production') {
+  // HEROKU DB
+  console.log(process.env.JAWSDB_URL);
+  var connection = new Sequelize(process.env.JAWSDB_URL);
+  } else {
+  //LOCAL DB 
+  var connection = new Sequelize('virtual_flyer_db', 'root');
+};
 
 
-//requiring mysql package
-var mysql      = require('mysql');
+/*
+Model
+*/
 
-var connection = mysql.createConnection(process.env.JAWSDB_URL || {
-  host     : 'localhost',
-  user     : 'root',
-  database : 'virtual_flyer_db'
+//Registration
+//models
+var User_test = connection.define('app-users', {
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [5,20],
+        msg: "Your password must be between 5-20 characters"
+      },
+    }
+  },
+  location: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  user_type: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  authenticated: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false, 
+    defaultValue: false
+  }, 
+}, {
+  hooks: {
+    beforeCreate: function (input) {
+      input.password = bcrypt.hashSync(input.password, 10);
+    }
+  }
+
+});
+
+var Venue = connection.define('venue', {
+  venue_name: Sequelize.STRING,
+  address_line: Sequelize.STRING,
+  capacity: Sequelize.INTEGER,
+  safe_space: Sequelize.STRING
+});
+
+var Event = connection.define('event',{
+    event_name: Sequelize.STRING,
+    event_day: Sequelize.STRING,
+    event_date: Sequelize.DATE,
+    start_time: Sequelize.TIME,
+    end_time: Sequelize.TIME,
+    artist1: Sequelize.STRING,
+    artist2: Sequelize.STRING,
+    artist3: Sequelize.STRING,
+    genre: Sequelize.STRING,
+    cost: Sequelize.DECIMAL
+    // username: 
+    //how can I make this refer to other table
 });
 
 
-// var Sequelize = require('sequelize');
-// var connection = new Sequelize('user_authentication_db', 'root');
+//Creating db connection object to export to main 
+var db = {
+  User: User_test,
+  //Place: Place,
+  connection: connection
+}; //end of db object
+
+// User.findOne().then(function (user) {
+//     console.log(user.name);
+// });
 
 
-connection.connect();
- 
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-  if (err) throw err;
-  console.log("Connection to DB made")
-  console.log('The solution is: ', rows[0].solution);
-});
+var Test_User = connection.define('test_user', {
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [5,20],
+        msg: "Your password must be between 5-20 characters"
+      },
+    }
+  },
+  instructor_type: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+// }, {
+//   hooks: {
+//     beforeCreate: function(input){
+//       input.password = bcrypt.hashSync(input.password, 10);
+//     }
+//   }
+}); //end of test user
 
 
 
-module.exports = connection;
+module.exports = db;
