@@ -166,25 +166,26 @@ app.post('/check', passport.authenticate('local', {
     
 }));
 
+
 router.get('/dashboard', function (req, res) {
+   debugger
+   console.log("hitting Social's dashboard page");
+   console.log("req: "+ req)
+   console.log("res: "+ res)
+   db.Events.findAll().then(function (results) {
+     // where: {event_name: event_name}
+
   debugger
-  console.log("hitting Social's dashboard page")
+   
+    var eventsTableData = {
+         events: results
+    }
+
+  console.log("eventsTableData: "+eventsTableData);
   
-  // flyerMethods.allData(function (rutgersData) {
-  //   debugger
-  //   console.log("rutgersData from ORM: " + rutgersData);
-  //   //Data Object for handlebars
-  //   // var rutgersTableData = {
-  //   //     rutgersDashboard: rutgersData
-  //   // }
 
-  //   console.log("rutgersTableData");
-  //   //res.redirect("/");
-  //   //res.render('home', rutgersTableData);
-  //   res.send("You are on the dashboard page");
-  // });
-
-  res.render('dashboard');
+   res.render('dashboard', eventsTableData);
+  });
 });
 
 
