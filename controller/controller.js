@@ -98,13 +98,14 @@ router.get('/register', function (req, res){
   res.render('register');
 });
 
-router.post('/registered', function (req, res) {
+router.post('/register', function (req, res) {
   debugger
   console.log(req.body);
   //Parse the body of the request from the form
-
+  console.log(req.body.username);
+  console.log(req.body.password);
   var userToRegister = req.body.username;
-  res.send(userToRegister);
+  res.send(req.body);
 });
 
 
