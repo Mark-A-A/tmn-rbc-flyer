@@ -33,7 +33,9 @@ app.use(methodOverride('_method'));
 // });
 
 app.use("/", router);
+
 app.use("/register", router);
+
 app.use("/login", router);
 // app.use("/dashboard", router);
 

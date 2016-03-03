@@ -4,7 +4,7 @@ MySQL Connection to DB
 debugger
 
 var Sequelize = require('sequelize');
-var PORT = process.env.PORT || 4040;
+var bcrypt = require('bcryptjs');
 
 //Local or Heroku AWS
 if(process.env.NODE_ENV === 'production') {
@@ -12,8 +12,7 @@ if(process.env.NODE_ENV === 'production') {
   console.log(process.env.JAWSDB_URL);
   var connection = new Sequelize(process.env.JAWSDB_URL);
   } else {
-  //LOCAL DB
-  var Sequelize = require('sequelize');  
+  //LOCAL DB 
   var connection = new Sequelize('virtual_flyer_db', 'root');
 };
 
@@ -23,38 +22,84 @@ Model
 */
 
 //Registration
-var User = connection.define('user', {
- first_name: Sequelize.STRING,
- last_name: Sequelize.STRING,
- student: Sequelize.BOOLEAN,
- teacher: Sequelize.BOOLEAN,
- city: Sequelize.STRING,
- state: Sequelize.STRING,
- email: {
-  type: Sequelize.STRING,
-  unique: true,
-  allowNull: false
-  //validate
-  // validate: {
-  //   notEmpty: true,
-  //   len: {  //set validation range and error message
-  //     arguments: [1,25],
-  //     message: "Please enter an email "
+//models
+var User_test = connection.define('app-users', {
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [5,20],
+        msg: "Your password must be between 5-20 characters"
+      },
+    }
+  },
+  location: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  user_type: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  authenticated: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false, 
+    defaultValue: false
+  }, 
+}, {
+  hooks: {
+    beforeCreate: function (input) {
+      input.password = bcrypt.hashSync(input.password, 10);
+    }
+  }
 
-  //   },
- },
- password: Sequelize.STRING,
- authenticated: Sequelize.BOOLEAN
 });
 
-// var Place = connection.define('place', {
+var Venue = connection.define('venue', {
+  venue_name: Sequelize.STRING,
+  address_line: Sequelize.STRING,
+  capacity: Sequelize.INTEGER,
+  safe_space: Sequelize.STRING
+});
 
-// });
+var Event = connection.define('event',{
+    event_name: Sequelize.STRING,
+    event_day: Sequelize.STRING,
+    event_date: Sequelize.DATE,
+    start_time: Sequelize.TIME,
+    end_time: Sequelize.TIME,
+    artist1: Sequelize.STRING,
+    artist2: Sequelize.STRING,
+    artist3: Sequelize.STRING,
+    genre: Sequelize.STRING,
+    cost: Sequelize.DECIMAL
+    // username: 
+    //how can I make this refer to other table
+});
 
 
 //Creating db connection object to export to main 
 var db = {
-  User: User,
+  User: User_test,
   //Place: Place,
   connection: connection
 }; //end of db object
