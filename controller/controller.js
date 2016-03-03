@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser');
 
 var passport = require('passport');
+var passportLocal = require('passport-local');
 
 var serveStatic = require('serve-static');
 
@@ -31,35 +32,82 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
+//passport use methed as callback when being authenticated
+passport.use(new passportLocal.Strategy(
+  function (username, password, done) {
+    //check password in db
+    User.findOne({
+        where: {
+            username: username
+        }
+    }).then(function (user) {
+        //check password against hash
+        if (user) {
+            bcrypt.compare(password, user.dataValues.password, function(err, user) {
+                if (user) {
+                  //if password is correct authenticate the user with cookie
+                  done(null, { id: username, username: username });
+                } else{
+                  done(null, null);
+                }
+            });
+        } else {
+            done(null, null);
+        }
+    });
+
+}));
+
+
+//change the object used to authenticate to a smaller token, and protects the server from attacks
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+passport.deserializeUser(function(id, done) {
+    done(null, { id: id, name: id })
+});
+
 
 router.get('/', function (req, res) {
   debugger
   console.log("Controller: hitting  home page");
 
-  db.User.findAll({}).then(function (dbUsers) {
-    console.log(dbUsers);
+  // db.User.findAll({}).then(function (dbUsers) {
+  //   console.log(dbUsers);
     
-    //Creating data objects for handlebars renderings
-    var userTableData = {
-      appUsers: dbUsers
-    }
+  //   //Creating data objects for handlebars renderings
+  //   var userTableData = {
+  //     appUsers: dbUsers
+  //   }
     
     
-    console.log("getting data back..Your Data:"+ userTableData.appUsers);
+  //   console.log("getting data back..Your Data:"+ userTableData.appUsers);
     
-    //res.send(dbUsers);
-    res.render("home")
+  //   //res.send(dbUsers);
+  //   
 
-  });
+  // });
+  res.render("home")
 }); //end of home route
 
  
 
 //Registration Page
 router.get('/register', function (req, res){
-  console.log("hi");
+  console.log("Controller.js: hitting register page");
   res.render('register');
 });
+
+router.post('/registered', function (req, res) {
+  debugger
+  console.log(req.body);
+  //Parse the body of the request from the form
+
+  var userToRegister = req.body.username;
+  res.send(userToRegister);
+});
+
+
 
 //Log In
 router.get('/login', function (req, res) {
@@ -76,31 +124,33 @@ router.get('/login', function (req, res) {
     res.render("login");
   
 })
-// router.post('/login', 
-//   passport.authenticate('local', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     res.redirect('/');
-//   });
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/dashboard/$msg='+ "successful login");
+});
 
 
 
 router.get('/dashboard', function (req, res) {
   debugger
-  console.log("hitting  home page")
+  console.log("hitting Social's dashboard page")
   
-  flyerMethods.allData(function (rutgersData) {
-    debugger
-    console.log("rutgersData from ORM: " + rutgersData);
-    //Data Object for handlebars
-    // var rutgersTableData = {
-    //     rutgersDashboard: rutgersData
-    // }
+  // flyerMethods.allData(function (rutgersData) {
+  //   debugger
+  //   console.log("rutgersData from ORM: " + rutgersData);
+  //   //Data Object for handlebars
+  //   // var rutgersTableData = {
+  //   //     rutgersDashboard: rutgersData
+  //   // }
 
-    console.log("rutgersTableData");
-    //res.redirect("/");
-    //res.render('home', rutgersTableData);
-    res.send("You are on the dashboard page");
-  });
+  //   console.log("rutgersTableData");
+  //   //res.redirect("/");
+  //   //res.render('home', rutgersTableData);
+  //   res.send("You are on the dashboard page");
+  // });
+
+  res.render('dashboard');
 });
 
 
