@@ -148,15 +148,14 @@ app.post("/register", function(req, res){
   });
 })
 
-app.get('/results', function(req,res){
-  User.findAll({
-    where: {
-      id: 1
-    }
+var getUser = function (req, res) {
+  User.findAll().then(function (users) {
+    res.send(users);
   });
-});
+};
 
 connection.sync().then(function() {
+  app.get("/users", getUser);
   app.listen(PORT, function() {
     console.log("Listening on port %s", PORT);
   });
