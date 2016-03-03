@@ -135,7 +135,11 @@ app.get('/register', function(req, res){
   res.render('register');
 });
 
-app.post("/register-info", function(req, res){
+app.get('/login', function(req,res){
+  res.render('login')
+})
+
+app.post("/register", function(req, res){
   User.create(req.body).then(function(result){
     res.redirect('/');
   }).catch(function(err) {
@@ -143,6 +147,14 @@ app.post("/register-info", function(req, res){
     res.redirect('/?msg=' + err.errors[0].message);
   });
 })
+
+app.get('/results', function(req,res){
+  User.findAll({
+    where: {
+      id: 1
+    }
+  });
+});
 
 connection.sync().then(function() {
   app.listen(PORT, function() {
