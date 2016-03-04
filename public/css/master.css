@@ -138,3 +138,7 @@ section {
     margin-right: auto;
     margin-left: 0;
 }
+img{
+ align-self: center;
+ position: static;
+}
