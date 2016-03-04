@@ -33,8 +33,8 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(cookieParser());
 
 //Starting Passport Authentication
-app.use(passport.initialize());
-app.use(passport.session());
+router.use(passport.initialize());
+router.use(passport.session());
 
 //passport use methed as callback when being authenticated
 passport.use(new passportLocal.Strategy(
@@ -48,7 +48,7 @@ passport.use(new passportLocal.Strategy(
         //check password against hash
         if (user) {
             bcrypt.compare(password, user.dataValues.password, function(err, user) {
-                if (user) {
+                if (username) {
                   //if password is correct authenticate the user with cookie
                   done(null, { id: username, username: username });
                 } else{
@@ -177,7 +177,7 @@ router.post('/login', passport.authenticate('local', {
 
 
 //check login with db
-app.post('/check', passport.authenticate('local', {
+router.post('/check', passport.authenticate('local', {
     
 }));
 
