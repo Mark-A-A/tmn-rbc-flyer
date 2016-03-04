@@ -73,10 +73,6 @@ passport.deserializeUser(function(id, done) {
 
 //--------------ROUTES----------------------
 router.get('/', function (req, res) {
-<<<<<<< HEAD
-  
-=======
->>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
   console.log("Controller: hitting  home page");
   res.render("home")
 }); //end of home route
@@ -182,11 +178,8 @@ router.post('/login', passport.authenticate('local', {
 
 
 //check login with db
-<<<<<<< HEAD
-// app.post('/check', passport.authenticate('local', {
-=======
-router.post('/check', passport.authenticate('local', {
->>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
+
+//router.post('/check', passport.authenticate('local', {
     
 // }));
 
@@ -206,11 +199,6 @@ router.get('/dashboard', function (req, res) {
     }
 
   console.log("eventsTableData: "+eventsTableData);
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
    res.render('dashboard', eventsTableData);
   });
 });
@@ -232,7 +220,3 @@ router.post('/dashboard/posts:id', function (req, res) {
 });
 
 module.exports = router;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
