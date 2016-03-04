@@ -29,3 +29,43 @@
   margin: 0 auto;
   /*padding-bottom: 10px;*/
 }
+
+#rutgers-banner-registration-login > h2 {
+  font-family: 'Istok Web', sans-serif;
+  font-weight: 700;
+  font-size: 100px;
+  text-align: center;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
+  margin: 0 auto;
+  /*padding-bottom: 10px;*/
+}
+
+.jumbotron-dashboard {
+  background-image: url("/pictures/redbanner-gradiant.png");
+  position: relative;
+  padding-top: 15px;
+  /*padding-bottom: 0;*/
+  /*margin: 0 auto;*/
+  
+
+  height: 100px;
+  /*transform:translateY(-25px);*/
+}
+#rutgers-banner-dashboard > h2 {
+  font-family: 'Istok Web', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  text-align: right;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
+  margin: 0 auto;
+  /*padding-bottom: 10px;*/
+}
+
+.dashboard-post {
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-bottom: ;
+  margin: 0 auto;
+}

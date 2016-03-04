@@ -13,9 +13,9 @@ if(process.env.NODE_ENV === 'production') {
   var connection = new Sequelize(process.env.JAWSDB_URL);
   } else {
   //LOCAL DB
-  // var connection = new Sequelize('virtual_flyer_db', 'root' 'chronoprint2594');
   var connection = new Sequelize('virtual_flyer_db', 'root');
-}
+};
+
 
 /*
 Model
