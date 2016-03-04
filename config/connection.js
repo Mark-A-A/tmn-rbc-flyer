@@ -12,10 +12,10 @@ if(process.env.NODE_ENV === 'production') {
   console.log(process.env.JAWSDB_URL);
   var connection = new Sequelize(process.env.JAWSDB_URL);
   } else {
-  //LOCAL DB 
+  //LOCAL DB
+  // var connection = new Sequelize('virtual_flyer_db', 'root' 'chronoprint2594');
   var connection = new Sequelize('virtual_flyer_db', 'root');
-};
-
+}
 
 /*
 Model
@@ -62,9 +62,9 @@ var User_test = connection.define('app-users', {
   },
   authenticated: {
     type: Sequelize.BOOLEAN,
-    allowNull: false, 
+    allowNull: false,
     defaultValue: false
-  }, 
+  },
 }, {
   hooks: {
     beforeCreate: function (input) {
@@ -92,12 +92,12 @@ var Event = connection.define('event',{
     artist3: Sequelize.STRING,
     genre: Sequelize.STRING,
     cost: Sequelize.DECIMAL
-    // username: 
+    // username:
     //how can I make this refer to other table
 });
 
 
-//Creating db connection object to export to main 
+//Creating db connection object to export to main
 var db = {
   User: User_test,
   //Place: Place,

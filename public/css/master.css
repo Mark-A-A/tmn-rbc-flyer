@@ -132,3 +132,9 @@ section {
   height: 100%;
   padding-top:100px;
 }
+.container {
+    padding-right: 15px;
+    padding-left: 6px;
+    margin-right: auto;
+    margin-left: 0;
+}
