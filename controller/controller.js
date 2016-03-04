@@ -20,7 +20,7 @@ var serveStatic = require('serve-static');
 var app = express();
 
 //initializing node packages for Middleware
-
+//using servestaic for static files
 app.use(serveStatic(__dirname + '/public'));
 
 //Parse the body of responses
@@ -40,7 +40,7 @@ app.use(passport.session());
 passport.use(new passportLocal.Strategy(
   function (username, password, done) {
     //check password in db
-    User.findOne({
+    User_test.findOne({
         where: {
             username: username
         }
@@ -102,6 +102,10 @@ router.get('/register', function (req, res){
   res.render('register');
 });
 
+router.get('/event-registration', function (req, res){
+  res.render('event-registration');
+});
+
 router.post('/register', function (req, res) {
   debugger
   console.log(req.body);
@@ -136,8 +140,47 @@ router.post('/register', function (req, res) {
     console.log(err);
     res.redirect('/register/?msg='+'failed to register');
   });
-
 });
+
+router.post('/event-registration', function (req, res) {
+    var event_name = req.body.event_name;
+    var event_day = req.body.event_day;
+    var event_date = req.body.event_date;
+    var start_time = req.body.start_time;
+    var end_time = req.body.end_time;
+    var venue_name = req.body.venue_name;
+    var address_line = req.body.address_line;
+    var capacity = req.body.capacity;
+    var artist1 = req.body.artist1;
+    var artist2 = req.body.artist2;
+    var artist3 = req.body.artist3;
+    var genre = req.body.genre;
+    var cost = req.body.cost;
+    var event_url = req.body.event_url;
+
+    db.Events.create({
+      event_name: event_name,
+      event_day: event_day,
+      event_date: event_date,
+      start_time: start_time,
+      end_time: end_time,
+      venue_name: venue_name,
+      address_line: address_line,
+      capacity: capacity,
+      artist1: artist1,
+      artist2: artist2,
+      artist3: artist3,
+      genre: genre,
+      cost: cost,
+      event_url: event_url
+    }).then(function (result) {
+    console.log("successful registration")
+    res.redirect('/dashboard');
+  }).catch(function (err){
+    console.log(err);
+    res.redirect('/register/?msg='+'failed to register event');
+  }); 
+})
 
 //Log In
 router.get('/login', function (req, res) {
@@ -154,33 +197,38 @@ router.get('/login', function (req, res) {
     res.render("login");
   
 })
-router.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/dashboard/$msg='+ "successful login");
-});
+router.post('/login', passport.authenticate('local', { 
+  successRedirect: '/dashboard',
+  failureRedirect: '/?msg=Login Credentials do not work'
+  
+}));
 
+
+//check login with db
+app.post('/check', passport.authenticate('local', {
+    
+}));
 
 
 router.get('/dashboard', function (req, res) {
+   debugger
+   console.log("hitting Social's dashboard page");
+   console.log("req: "+ req)
+   console.log("res: "+ res)
+   db.Events.findAll().then(function (results) {
+     // where: {event_name: event_name}
+
   debugger
-  console.log("hitting Social's dashboard page")
+   
+    var eventsTableData = {
+         events: results
+    }
+
+  console.log("eventsTableData: "+eventsTableData);
   
-  // flyerMethods.allData(function (rutgersData) {
-  //   debugger
-  //   console.log("rutgersData from ORM: " + rutgersData);
-  //   //Data Object for handlebars
-  //   // var rutgersTableData = {
-  //   //     rutgersDashboard: rutgersData
-  //   // }
 
-  //   console.log("rutgersTableData");
-  //   //res.redirect("/");
-  //   //res.render('home', rutgersTableData);
-  //   res.send("You are on the dashboard page");
-  // });
-
-  res.render('dashboard');
+   res.render('dashboard', eventsTableData);
+  });
 });
 
 
