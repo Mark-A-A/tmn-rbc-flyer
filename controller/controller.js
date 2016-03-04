@@ -117,7 +117,7 @@ router.post('/register', function (req, res) {
     
     console.log("successful registration")
     //res.redirect('/success');
-    res.send("you created a user..check db and table");
+    res.redirect('/dashboard');
   }).catch(function (err){
     
     console.log(err);
