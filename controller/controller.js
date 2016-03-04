@@ -40,7 +40,7 @@ app.use(passport.session());
 passport.use(new passportLocal.Strategy(
   function (username, password, done) {
     //check password in db
-    User_test.findOne({
+    db.User.findOne({
         where: {
             username: username
         }
@@ -62,7 +62,6 @@ passport.use(new passportLocal.Strategy(
 
 }));
 
-
 //change the object used to authenticate to a smaller token, and protects the server from attacks
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -71,30 +70,11 @@ passport.deserializeUser(function(id, done) {
     done(null, { id: id, name: id })
 });
 
-
+//--------------ROUTES----------------------
 router.get('/', function (req, res) {
-  debugger
   console.log("Controller: hitting  home page");
-
-  // db.User.findAll({}).then(function (dbUsers) {
-  //   console.log(dbUsers);
-    
-  //   //Creating data objects for handlebars renderings
-  //   var userTableData = {
-  //     appUsers: dbUsers
-  //   }
-    
-    
-  //   console.log("getting data back..Your Data:"+ userTableData.appUsers);
-    
-  //   //res.send(dbUsers);
-  //   
-
-  // });
   res.render("home")
 }); //end of home route
-
- 
 
 //Registration Page
 router.get('/register', function (req, res){
@@ -102,10 +82,12 @@ router.get('/register', function (req, res){
   res.render('register');
 });
 
+//Event Registration
 router.get('/event-registration', function (req, res){
   res.render('event-registration');
 });
 
+// -------Adding information to databases----------
 router.post('/register', function (req, res) {
   debugger
   console.log(req.body);
@@ -184,23 +166,13 @@ router.post('/event-registration', function (req, res) {
 
 //Log In
 router.get('/login', function (req, res) {
-  debugger
   console.log("Controller: hitting  login page");
+  res.render("login");
+});
 
-  //db.User.findAll({}).then(function (dbUsers) {
-  //console.log(dbUsers);
-    
-  //console.log("getting data back..Your Data:"+ userTableData.appUsers);
-  //}); 
-
-    //res.send(dbUsers);
-    res.render("login");
-  
-})
 router.post('/login', passport.authenticate('local', { 
   successRedirect: '/dashboard',
   failureRedirect: '/?msg=Login Credentials do not work'
-  
 }));
 
 
@@ -226,7 +198,6 @@ router.get('/dashboard', function (req, res) {
 
   console.log("eventsTableData: "+eventsTableData);
   
-
    res.render('dashboard', eventsTableData);
   });
 });
@@ -244,37 +215,8 @@ router.post('/dashboard/:id', function (req, res) {
       id: idToDelete
     }
   });
-
   res.redirect('/dashboard');
 });
 
 module.exports = router;
-
-
-
-
-
-/*  Scrap Code
- 
-  // flyerMethods.allData(function (rutgersData) {
-  //   debugger
-  //   console.log("rutgersData from ORM: " + rutgersData);
-  //   //Data Object for handlebars
-    
-  //   var rutgersTableData = {
-  //     rutgersUsers: rutgersData
-  //   };
-
-  //   console.log("rutgers Data from Table: " + rutgersData);
-
-  // //   //res.redirect("/");
-  //   res.send(rutgersTableData);
-  //   //res.render('home', );
-  // //   res.send("You are on the home page");
-  // // });
-  //  //res.send("You are on the home page");
-  // }); //end of DB callback
-
-*/
-
 

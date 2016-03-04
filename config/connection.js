@@ -13,7 +13,7 @@ if(process.env.NODE_ENV === 'production') {
   var connection = new Sequelize(process.env.JAWSDB_URL);
   } else {
   //LOCAL DB 
-  var connection = new Sequelize('test_flyer_db2', 'root');
+  var connection = new Sequelize('test_flyer_db2', 'root', 'atom828ye567');
 };
 
 
