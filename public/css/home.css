@@ -1,0 +1,30 @@
+.home-carousel {
+  padding-top: 20px;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0 auto;
+
+}
+
+.home-carousel-resposiveness-col {
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+.carousel-inner {/*
+  
+/*  width: 630px;
+  height: 420px;*/
+  width: 100%;
+  height: 425px;
+}
+
+.carousel-inner > .item > img {
+ /* width: 630px;
+  */
+  width: 100%;
+  height: 425px;
+}
