@@ -28,9 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Middleware for Session
 //Session ID
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+router.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 //For parsing cookie information - Ex: console.log("Cookies: ", req.cookies)
-app.use(cookieParser());
+router.use(cookieParser());
 
 //Starting Passport Authentication
 router.use(passport.initialize());
@@ -43,7 +43,7 @@ passport.use(new passportLocal.Strategy(
     //check password in db
     db.User.findOne({
         where: {
-            email: email
+            username: username
         }
     }).then(function (user) {
         //check password against hash
