@@ -39,10 +39,11 @@ router.use(passport.session());
 //passport use methed as callback when being authenticated
 passport.use(new passportLocal.Strategy(
   function (username, password, done) {
+
     //check password in db
     db.User.findOne({
         where: {
-            username: username
+            email: email
         }
     }).then(function (user) {
         //check password against hash
@@ -72,6 +73,10 @@ passport.deserializeUser(function(id, done) {
 
 //--------------ROUTES----------------------
 router.get('/', function (req, res) {
+<<<<<<< HEAD
+  
+=======
+>>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
   console.log("Controller: hitting  home page");
   res.render("home")
 }); //end of home route
@@ -89,7 +94,7 @@ router.get('/event-registration', function (req, res){
 
 // -------Adding information to databases----------
 router.post('/register', function (req, res) {
-  debugger
+  
   console.log(req.body);
   //Parse the body of the request from the form
   console.log(req.body.username);
@@ -113,12 +118,12 @@ router.post('/register', function (req, res) {
     user_type: userType
 
   }).then(function (result) {
-    debugger
+    
     console.log("successful registration")
     //res.redirect('/success');
     res.send("you created a user..check db and table");
   }).catch(function (err){
-    debugger
+    
     console.log(err);
     res.redirect('/register/?msg='+'failed to register');
   });
@@ -177,35 +182,43 @@ router.post('/login', passport.authenticate('local', {
 
 
 //check login with db
+<<<<<<< HEAD
+// app.post('/check', passport.authenticate('local', {
+=======
 router.post('/check', passport.authenticate('local', {
+>>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
     
-}));
+// }));
 
 
 router.get('/dashboard', function (req, res) {
-   debugger
+  
+  //res.redirect("/login");
+  
    console.log("hitting Social's dashboard page");
    console.log("req: "+ req)
    console.log("res: "+ res)
    db.Events.findAll().then(function (results) {
      // where: {event_name: event_name}
-
-  debugger
    
     var eventsTableData = {
          events: results
     }
 
   console.log("eventsTableData: "+eventsTableData);
+<<<<<<< HEAD
+
+=======
   
+>>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e
    res.render('dashboard', eventsTableData);
   });
 });
 
 
-router.post('/dashboard/:id', function (req, res) {
+router.post('/dashboard/posts:id', function (req, res) {
   debugger
-  
+
   console.log("req.body: " +req.body);
 
   console.log("id: "+ req.body.id);
@@ -219,4 +232,7 @@ router.post('/dashboard/:id', function (req, res) {
 });
 
 module.exports = router;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4cfcbf2ecafa9aeba1b554c7129a7a178435627e

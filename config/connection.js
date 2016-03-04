@@ -1,7 +1,7 @@
 /*
 MySQL Connection to DB
 */
-debugger
+
 
 var Sequelize = require('sequelize');
 var bcrypt = require('bcryptjs');
