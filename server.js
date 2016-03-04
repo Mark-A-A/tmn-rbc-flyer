@@ -3,7 +3,7 @@ var router = require('./controller/controller.js');
 
 console.log("PORT: "+ process.env.PORT);
 var PORT = process.env.PORT || 4040;
-console.log(PORT); //checking for local port
+console.log("PORT: "+ PORT); //checking for local port
 
 var express = require('express');
 var exphbs  = require('express-handlebars');
@@ -42,7 +42,6 @@ app.use("/login", router);
 
 db.connection.sync(/*{force: true}*/).then(function () {
   app.listen(PORT, function (){
-  debugger
   console.log("Server listening on Port %s", PORT);
   });
 });

@@ -39,10 +39,11 @@ app.use(passport.session());
 //passport use methed as callback when being authenticated
 passport.use(new passportLocal.Strategy(
   function (username, password, done) {
-    //check password in db
-    User_test.findOne({
+  //check password in db
+debugger
+    db.User.findOne({
         where: {
-            username: username
+            email: email
         }
     }).then(function (user) {
         //check password against hash
@@ -73,7 +74,7 @@ passport.deserializeUser(function(id, done) {
 
 
 router.get('/', function (req, res) {
-  debugger
+  
   console.log("Controller: hitting  home page");
 
   // db.User.findAll({}).then(function (dbUsers) {
@@ -103,7 +104,7 @@ router.get('/register', function (req, res){
 });
 
 router.post('/register', function (req, res) {
-  debugger
+  
   console.log(req.body);
   //Parse the body of the request from the form
   console.log(req.body.username);
@@ -127,12 +128,12 @@ router.post('/register', function (req, res) {
     user_type: userType
 
   }).then(function (result) {
-    debugger
+    
     console.log("successful registration")
     //res.redirect('/success');
     res.send("you created a user..check db and table");
   }).catch(function (err){
-    debugger
+    
     console.log(err);
     res.redirect('/register/?msg='+'failed to register');
   });
@@ -162,36 +163,35 @@ router.post('/login', passport.authenticate('local', {
 
 
 //check login with db
-app.post('/check', passport.authenticate('local', {
+// app.post('/check', passport.authenticate('local', {
     
-}));
+// }));
 
 
 router.get('/dashboard', function (req, res) {
-   debugger
+  
+  //res.redirect("/login");
+  
    console.log("hitting Social's dashboard page");
    console.log("req: "+ req)
    console.log("res: "+ res)
    db.Events.findAll().then(function (results) {
      // where: {event_name: event_name}
-
-  debugger
    
     var eventsTableData = {
          events: results
     }
 
   console.log("eventsTableData: "+eventsTableData);
-  
 
    res.render('dashboard', eventsTableData);
   });
 });
 
 
-router.post('/dashboard/:id', function (req, res) {
+router.post('/dashboard/posts:id', function (req, res) {
   debugger
-  
+
   console.log("req.body: " +req.body);
 
   console.log("id: "+ req.body.id);
@@ -206,32 +206,3 @@ router.post('/dashboard/:id', function (req, res) {
 });
 
 module.exports = router;
-
-
-
-
-
-/*  Scrap Code
- 
-  // flyerMethods.allData(function (rutgersData) {
-  //   debugger
-  //   console.log("rutgersData from ORM: " + rutgersData);
-  //   //Data Object for handlebars
-    
-  //   var rutgersTableData = {
-  //     rutgersUsers: rutgersData
-  //   };
-
-  //   console.log("rutgers Data from Table: " + rutgersData);
-
-  // //   //res.redirect("/");
-  //   res.send(rutgersTableData);
-  //   //res.render('home', );
-  // //   res.send("You are on the home page");
-  // // });
-  //  //res.send("You are on the home page");
-  // }); //end of DB callback
-
-*/
-
-
