@@ -176,35 +176,72 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/?msg=Login Credentials do not work'
 }));
 
-
 //check login with db
-
 //router.post('/check', passport.authenticate('local', {
-    
 // }));
 
+// router.get('/dashboard', function (req, res) {
+//   debugger
+//   //res.redirect("/login");
+//   var eventsTableData;
+//   var postsTableData;
+//   console.log("hitting Social's dashboard page");
+//   console.log("req: "+ req)
+//   console.log("res: "+ res)
+//   db.Events.findAll().then(function (results) {
+//      // where: {event_name: event_name}
+//     debugger
+//     console.log("looking to add Events to dashboard page");
+//     eventsTableData = {
+//          events: results
+//     }
 
+//     console.log("eventsTableData: "+ eventsTableData);
+//     res.render('dashboard', eventsTableData);
+//   });
+
+  
+
+// });
 router.get('/dashboard', function (req, res) {
-  
+  debugger
   //res.redirect("/login");
+  var eventsTableData;
+  var postsTableData;
+  console.log("hitting Social's dashboard page");
+  console.log("req: "+ req)
+  console.log("res: "+ res)
   
-   console.log("hitting Social's dashboard page");
-   console.log("req: "+ req)
-   console.log("res: "+ res)
-   db.Events.findAll().then(function (results) {
-     // where: {event_name: event_name}
-   
-    var eventsTableData = {
-         events: results
-    }
 
-  console.log("eventsTableData: "+eventsTableData);
-   res.render('dashboard', eventsTableData);
+  db.Posts.findAll().then(function (results) {
+    debugger
+    console.log("looking to add Posts to dashboard page");
+    
+    postsTableData = {
+        posts: results
+    }
+    res.render('dashboard', postsTableData)
   });
+
+
 });
 
+router.post('/create-post', function (req, res) {
+  debugger
+  console.log(req.body);
+  db.Posts.create({
 
-router.post('/dashboard/posts:id', function (req, res) {
+  }).then(function (result) {
+    console.log("successful post")
+    res.redirect('/dashboard/?msg='+'posted to wall');
+  }).catch(function (err){
+    console.log(err);
+    res.redirect('/dashboard/?msg='+'failed to post to wall');
+  })
+
+});
+
+router.post('/dashboard/:post_id', function (req, res) {
   debugger
 
   console.log("req.body: " +req.body);

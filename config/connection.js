@@ -111,19 +111,30 @@ var Event = connection.define('event',{
 });
 
 var Post = connection.define('post', {
-  user_id: Sequelize.INTEGER,
+  user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: { 
+      model: 'app-users', 
+      key: 'id' 
+    } //end of references: FOREIGN KEY to toher table
+  },
   username: {
     type: Sequelize.STRING,
-    allowNull: false, 
+    allowNull: false,
+    references: { 
+      model: 'app-users', 
+      key: 'username' 
+    } //end of references: FOREIGN KEY to toher table
   },
-  post_id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,  
-  },
+  // post_id: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,  
+  // },
   post: {
     type: Sequelize.STRING,
     allowNull: false, 
-  },
+  }
 
 });
 

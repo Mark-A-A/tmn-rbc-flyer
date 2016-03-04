@@ -12,40 +12,65 @@
 <div class="container">
 
   <!--  src="http://www.clker.com/cliparts/5/3/f/4/1194986284683051133burger_http_www.treebuil_.svg.hi.png" src="https://image-gr.s3.envato.com/files/30857230/Cheeseburger-p.jpg"-->
+  <div class="welcome-user">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Welcome User (Put Username here) </h2>
+      </div>
+    </div>
+  </div> <!-- end of welcome-use section-->
+
   <div class="row">
     <div class="col-md-6">
       <h2>Events</h2>
 
       {{#each events}}
         <div class="row ">
-          <div class="col-md-5"> 
+          <!-- <div class="col-md-5">  -->
             <pre>{{id}}. {{event_name}}  </pre>
-          </div>
-          <div class="col-md-1">
-            <form action="/dashboard/{{id}}" method="POST">
-              <input type="hidden" name="_method" value="DELETE">
-              <input type="hidden" name="id" value="{{id}}">
-              <button type="submit" class="btn btn-lg">Delete Post</button>
-            </form>
-          </div>
+         <!--  </div> -->
 
         </div>
       {{/each}}
     </div> <!-- end of column-md-6 -->
 
+
     <div class="dashboard-post">
-      <form action="/create" method="POST">
-        <div class="form-group">
-          <div class="col-md-5">
-          <!-- <label for="exampleInput1">Make a post:</label> -->
-            <input type="text" name="postToAdd" class="form-control" id="exampleInput1" placeholder="Type your post">
+      <div class="col-md-6">
+      <h2>Posts</h2>
+      <div class="row row-form">
+        <form action="/create-post" method="POST">
+          <div class="form-group">
+            <div class="col-md-5">
+              <!-- <label for="exampleInput1">Make a post:</label> -->
+              <input type="text" name="postToAdd" class="form-control" id="exampleInput1" placeholder="Type your post">
+            </div>
+            <div class="col-md-1 ">
+              <button type="submit" class="btn btn-default">Post to Wall</button>
+            </div>
+          </div> <!-- end of form group -->
+        </form> <!-- end of form -->
+      </div> <!-- end of row-form -->
+      <div class="row row-posts">
+        {{#each posts}}
+          <div class="row ">
+            <div class="col-md-5"> 
+              <pre>{{post_id}}. {{post}}  </pre>
+            </div>
+            <div class="col-md-1">
+              <form action="/dashboard/{{post_id}}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="id" value="{{user_id}}">
+                <button type="submit" class="btn btn-lg">Delete Post</button>
+              </form>
+            </div>
+
           </div>
-          <div class="col-md-1 ">
-            <button type="submit" class="btn btn-default">Post</button>
-          </div>
-        </div> 
-      </form> <!-- end of form -->
-    </div> <!--end of dashboard-post -->
+        {{/each}}
+      </div> <!-- end of posts row -->
+    
+    </div> <!--end of col-md-6 -->
+  </div><!--end of dashboard-post -->
     
   
 
@@ -55,11 +80,11 @@
       {{ message }}
     </div>
   </div>
-   <div class="row">
-    <div class="col-md-12">
+   <!-- <div class="row">
+    <div class="col-xs-12 col-md-6">
       <input class="datepicker" type="text" placeholder="Try me">
     </div>
-  </div>
+  </div> -->
   
 </div> <!--  end of container -->
   
