@@ -33,14 +33,14 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(cookieParser());
 
 //Starting Passport Authentication
-app.use(passport.initialize());
-app.use(passport.session());
+router.use(passport.initialize());
+router.use(passport.session());
 
 //passport use methed as callback when being authenticated
 passport.use(new passportLocal.Strategy(
   function (username, password, done) {
     //check password in db
-    User_test.findOne({
+    db.User.findOne({
         where: {
             username: username
         }
@@ -48,7 +48,7 @@ passport.use(new passportLocal.Strategy(
         //check password against hash
         if (user) {
             bcrypt.compare(password, user.dataValues.password, function(err, user) {
-                if (user) {
+                if (username) {
                   //if password is correct authenticate the user with cookie
                   done(null, { id: username, username: username });
                 } else{
@@ -62,7 +62,6 @@ passport.use(new passportLocal.Strategy(
 
 }));
 
-
 //change the object used to authenticate to a smaller token, and protects the server from attacks
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -71,30 +70,11 @@ passport.deserializeUser(function(id, done) {
     done(null, { id: id, name: id })
 });
 
-
+//--------------ROUTES----------------------
 router.get('/', function (req, res) {
-  debugger
   console.log("Controller: hitting  home page");
-
-  // db.User.findAll({}).then(function (dbUsers) {
-  //   console.log(dbUsers);
-    
-  //   //Creating data objects for handlebars renderings
-  //   var userTableData = {
-  //     appUsers: dbUsers
-  //   }
-    
-    
-  //   console.log("getting data back..Your Data:"+ userTableData.appUsers);
-    
-  //   //res.send(dbUsers);
-  //   
-
-  // });
   res.render("home")
 }); //end of home route
-
- 
 
 //Registration Page
 router.get('/register', function (req, res){
@@ -102,6 +82,12 @@ router.get('/register', function (req, res){
   res.render('register');
 });
 
+//Event Registration
+router.get('/event-registration', function (req, res){
+  res.render('event-registration');
+});
+
+// -------Adding information to databases----------
 router.post('/register', function (req, res) {
   debugger
   console.log(req.body);
@@ -136,33 +122,62 @@ router.post('/register', function (req, res) {
     console.log(err);
     res.redirect('/register/?msg='+'failed to register');
   });
-
 });
+
+router.post('/event-registration', function (req, res) {
+    var event_name = req.body.event_name;
+    var event_day = req.body.event_day;
+    var event_date = req.body.event_date;
+    var start_time = req.body.start_time;
+    var end_time = req.body.end_time;
+    var venue_name = req.body.venue_name;
+    var address_line = req.body.address_line;
+    var capacity = req.body.capacity;
+    var artist1 = req.body.artist1;
+    var artist2 = req.body.artist2;
+    var artist3 = req.body.artist3;
+    var genre = req.body.genre;
+    var cost = req.body.cost;
+    var event_url = req.body.event_url;
+
+    db.Events.create({
+      event_name: event_name,
+      event_day: event_day,
+      event_date: event_date,
+      start_time: start_time,
+      end_time: end_time,
+      venue_name: venue_name,
+      address_line: address_line,
+      capacity: capacity,
+      artist1: artist1,
+      artist2: artist2,
+      artist3: artist3,
+      genre: genre,
+      cost: cost,
+      event_url: event_url
+    }).then(function (result) {
+    console.log("successful registration")
+    res.redirect('/dashboard');
+  }).catch(function (err){
+    console.log(err);
+    res.redirect('/register/?msg='+'failed to register event');
+  }); 
+})
 
 //Log In
 router.get('/login', function (req, res) {
-  debugger
   console.log("Controller: hitting  login page");
+  res.render("login");
+});
 
-  //db.User.findAll({}).then(function (dbUsers) {
-  //console.log(dbUsers);
-    
-  //console.log("getting data back..Your Data:"+ userTableData.appUsers);
-  //}); 
-
-    //res.send(dbUsers);
-    res.render("login");
-  
-})
 router.post('/login', passport.authenticate('local', { 
   successRedirect: '/dashboard',
   failureRedirect: '/?msg=Login Credentials do not work'
-  
 }));
 
 
 //check login with db
-app.post('/check', passport.authenticate('local', {
+router.post('/check', passport.authenticate('local', {
     
 }));
 
@@ -183,7 +198,6 @@ router.get('/dashboard', function (req, res) {
 
   console.log("eventsTableData: "+eventsTableData);
   
-
    res.render('dashboard', eventsTableData);
   });
 });
@@ -201,37 +215,8 @@ router.post('/dashboard/:id', function (req, res) {
       id: idToDelete
     }
   });
-
   res.redirect('/dashboard');
 });
 
 module.exports = router;
-
-
-
-
-
-/*  Scrap Code
- 
-  // flyerMethods.allData(function (rutgersData) {
-  //   debugger
-  //   console.log("rutgersData from ORM: " + rutgersData);
-  //   //Data Object for handlebars
-    
-  //   var rutgersTableData = {
-  //     rutgersUsers: rutgersData
-  //   };
-
-  //   console.log("rutgers Data from Table: " + rutgersData);
-
-  // //   //res.redirect("/");
-  //   res.send(rutgersTableData);
-  //   //res.render('home', );
-  // //   res.send("You are on the home page");
-  // // });
-  //  //res.send("You are on the home page");
-  // }); //end of DB callback
-
-*/
-
 
