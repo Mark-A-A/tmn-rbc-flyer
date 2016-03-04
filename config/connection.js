@@ -12,8 +12,8 @@ if(process.env.NODE_ENV === 'production') {
   console.log(process.env.JAWSDB_URL);
   var connection = new Sequelize(process.env.JAWSDB_URL);
   } else {
-  //LOCAL DB 
-  var connection = new Sequelize('virtual_flyer_db', 'root');
+  //LOCAL DB
+  var connection = new Sequelize('virtual_flyer_db', 'root','chronoprint2594');
 };
 
 
@@ -62,9 +62,9 @@ var User_test = connection.define('app-users', {
   },
   authenticated: {
     type: Sequelize.BOOLEAN,
-    allowNull: false, 
+    allowNull: false,
     defaultValue: false
-  }, 
+  },
 }, {
   hooks: {
     beforeCreate: function (input) {
@@ -74,9 +74,8 @@ var User_test = connection.define('app-users', {
 
 });
 
-var Place = connection.define('place', {
-  place_name: Sequelize.STRING,
-  place_type: Sequelize.STRING,
+var Venue = connection.define('venue', {
+  venue_name: Sequelize.STRING,
   address_line: Sequelize.STRING,
   capacity: Sequelize.INTEGER,
   safe_space: Sequelize.STRING
@@ -88,57 +87,64 @@ var Event = connection.define('event',{
     event_date: Sequelize.DATE,
     start_time: Sequelize.TIME,
     end_time: Sequelize.TIME,
-    venue_name: Sequelize.STRING,
-    address_line: Sequelize.STRING,
-    capacity: Sequelize.INTEGER,
     artist1: Sequelize.STRING,
-    artist2: {
-      type: Sequelize.STRING,
-      allowNull: true, 
-    },
-    artist3: {
-      type: Sequelize.STRING,
-      allowNull: true, 
-    },
+    artist2: Sequelize.STRING,
+    artist3: Sequelize.STRING,
     genre: Sequelize.STRING,
-    cost: Sequelize.DECIMAL,
-    event_url: {
-      type: Sequelize.STRING,
-      allowNull: true, 
-    },
-    // username: 
+    cost: Sequelize.DECIMAL
+    // username:
     //how can I make this refer to other table
 });
 
-var Post = connection.define('post', {
-  user_id: Sequelize.INTEGER,
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false, 
-  },
-  post_id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,  
-  },
-  post: {
-    type: Sequelize.STRING,
-    allowNull: false, 
-  },
 
-});
+//Creating db connection object to export to main
+var db = {
+  User: User_test,
+  //Place: Place,
+  connection: connection
+}; //end of db object
 
 // User.findOne().then(function (user) {
 //     console.log(user.name);
 // });
 
 
-//Creating db connection object to export to main 
-var db = {
-  User: User_test,
-  Places: Place,
-  Events: Event,
-  Posts: Post,
-  connection: connection
-}; //end of db object
+var Test_User = connection.define('test_user', {
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [5,20],
+        msg: "Your password must be between 5-20 characters"
+      },
+    }
+  },
+  instructor_type: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+// }, {
+//   hooks: {
+//     beforeCreate: function(input){
+//       input.password = bcrypt.hashSync(input.password, 10);
+//     }
+//   }
+}); //end of test user
+
+
 
 module.exports = db;

@@ -60,7 +60,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 // database setup
-var connection = new Sequelize('test_flyer_db2', 'root', 'atom828ye567');
+var connection = new Sequelize('test_flyer_db2', 'root', 'chronoprint2594');
 
 //models
 var User = connection.define('user', {
