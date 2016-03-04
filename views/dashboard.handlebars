@@ -18,26 +18,13 @@
 
       {{#each events}}
         <div class="row ">
-          <div class="col-md-6"> 
+          <div class="col-md-5"> 
             <pre>{{id}}. {{event_name}}  </pre>
           </div>
-          <div class="col-md-1"><!-- col-md-offset-1  -->
-          <!--     <form action="/delete/{{id}}?_method=DELETE" method="POST">
-                <input type="hidden"  name="burgerID"value="DELETE">
-                <input type="hidden" name="_method" value="{{id}}">
-                <button type="submit" class="btn btn-lg">Delete</button>
-              </form> -->
-            <form method="POST" action="/delete/{{id}}" enctype="application/x-www-form-urlencoded">
-              <input type="hidden" name="_method" value="DELETE">
-              <button type="submit">Delete resource</button>
-            </form>
-          </div>
-       
-          
           <div class="col-md-1">
             <form action="/dashboard/{{id}}" method="POST">
-              <input type="hidden" name="_method" value="POST">
-              <input type="hidden" name="_token" value="{{id}}">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="id" value="{{id}}">
               <button type="submit" class="btn btn-lg">Delete Post</button>
             </form>
           </div>

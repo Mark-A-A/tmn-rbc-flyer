@@ -232,6 +232,22 @@ router.get('/dashboard', function (req, res) {
 });
 
 
+router.post('/dashboard/:id', function (req, res) {
+  debugger
+  
+  console.log("req.body: " +req.body);
+
+  console.log("id: "+ req.body.id);
+  var idToDelete = req.body.id;
+  db.Events.destroy({
+    where: {
+      id: idToDelete
+    }
+  });
+
+  res.redirect('/dashboard');
+});
+
 module.exports = router;
 
 
