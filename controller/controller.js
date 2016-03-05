@@ -175,7 +175,7 @@ router.post('/event-registration', function (req, res) {
     res.redirect('/dashboard');
   }).catch(function (err){
     console.log(err);
-    res.redirect('/register/?msg='+'failed to register event');
+    res.redirect('/event-registration/?msg='+'failed to register event');
   }); 
 });
 
