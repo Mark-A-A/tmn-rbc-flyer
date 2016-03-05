@@ -19,7 +19,8 @@
       {{#each events}}
         <div class="row ">
           <div class="col-md-5"> 
-            <pre>{{id}}. {{event_name}}  </pre>
+<!--             <pre>{{id}}. {{event_name}}  </pre> -->
+            {{id}}. {{event_name}}
           </div>
           <div class="col-md-1">
             <form action="/dashboard/{{id}}" method="POST">

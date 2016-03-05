@@ -76,10 +76,20 @@ router.get('/', function (req, res) {
   res.render("home")
 }); //end of home route
 
+router.get('/home', function (req, res){
+  res.render('home')
+});
+
 //Registration Page
 router.get('/register', function (req, res){
   console.log("Controller.js: hitting register page");
   res.render('register');
+});
+
+//Login
+router.get('/login', function (req, res) {
+  console.log("Controller: hitting  login page");
+  res.render("login");
 });
 
 //Event Registration
@@ -87,8 +97,28 @@ router.get('/event-registration', function (req, res){
   if(req.isAuthenticated()){
     res.render('event-registration');  
   }else{
-    res.render('/')
+    res.render('/home/?msg='+'not authenticated')
   }
+});
+
+router.get('/dashboard', function (req, res) {
+  //res.redirect("/login");
+  console.log("hitting Social's dashboard page");
+  console.log("req: "+ req)
+  console.log("res: "+ res)
+  db.Events.findAll().then(function (results) {
+     // where: {event_name: event_name}
+     var eventsTableData = {
+       events: results
+     }
+     console.log("eventsTableData: "+eventsTableData);
+
+     if(req.isAuthenticated()){
+       res.render('dashboard', eventsTableData);
+     }else{
+      res.redirect('/home/?msg='+'not authenticated')
+    };
+  });
 });
 
 // -------Adding information to databases----------
@@ -168,37 +198,11 @@ router.post('/event-registration', function (req, res) {
   }); 
 })
 
-//Log In
-router.get('/login', function (req, res) {
-  console.log("Controller: hitting  login page");
-  res.render("login");
-});
-
 router.post('/login', passport.authenticate('local', { 
   successRedirect: '/dashboard',
-  // failureRedirect: '/?msg=Login Credentials do not work'
-  failureRedirect: '/login'
+  failureRedirect: '/?msg=Login Credentials do not work'
+  // failureRedirect: '/login'
 }));
-
-router.get('/dashboard', function (req, res) {
-  
-  //res.redirect("/login");
-  
-   console.log("hitting Social's dashboard page");
-   console.log("req: "+ req)
-   console.log("res: "+ res)
-   db.Events.findAll().then(function (results) {
-     // where: {event_name: event_name}
-   
-    var eventsTableData = {
-         events: results
-    }
-
-  console.log("eventsTableData: "+eventsTableData);
-   res.render('dashboard', eventsTableData);
-  });
-});
-
 
 router.post('/dashboard/posts:id', function (req, res) {
 
