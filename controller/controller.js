@@ -311,12 +311,13 @@ router.post('/create-post', function (req, res) {
   debugger
   console.log(req.body);
   console.log("posToAdd: "+req.body.postToAdd);
-  console.log("and the user is..."+req.body.firstname)
+  console.log("and the user is..."+req.body.username)
   db.Posts.create({
-
+    username: req.body.username,
+    post: req.body.postToAdd,
   }).then(function (result) {
     console.log("successful post")
-    res.redirect('/dashboard/?msg='+'posted to wall');
+    res.redirect('/dashboard/?msg=posted to wall');
   }).catch(function (err){
     console.log(err);
     res.redirect('/dashboard/?msg='+'failed to post to wall');
@@ -331,7 +332,7 @@ router.post('/dashboard/:post_id', function (req, res) {
 
   console.log("id: "+ req.body.id);
   var idToDelete = req.body.id;
-  db.Events.destroy({
+  db.Posts.destroy({
     where: {
       id: idToDelete
     }
