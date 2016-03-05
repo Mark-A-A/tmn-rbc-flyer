@@ -6,7 +6,7 @@
 
 html, body {
   height: 100%;
-  padding-top:26px;
+  /*padding-top:26px;*/
 }
 
 header {
@@ -14,6 +14,9 @@ header {
   min-height:500px;
 }
 
+.navbar {
+  margin-bottom: 0;
+}
 .navbar-nav {
   margin: 1px 1px;
 }

@@ -189,11 +189,7 @@ router.post('/login',
 //check authenttication
 // router.get('/dashboard', function (req,res) {
 //  debugger
-//   res.render('dashboard',{
-//     user: req.user,
-//     isAuthenticated: req.isAuthenticated(),
-//     msg: req.query.msg,
-//  });
+  // res.render('dashboard',);
 // });
 // console.log('App-user:'+ req.user);
 //   var where = {};
@@ -205,15 +201,46 @@ router.post('/login',
 //     };
 
 router.get('/dashboard', function (req, res) {
+  
+// {
+//     user: req.user,
+//     isAuthenticated: req.isAuthenticated(),
+//     msg: req.query.msg,
+//  }
+   
   //res.redirect("/login");
   console.log("hitting Social's dashboard page");
   console.log("req: "+ req)
   console.log("res: "+ res)
- 
+  console.log('user is', req.user);
+  console.log("looking to add user info to page");
+  var where = {};
+  if(req.user) {
+    where = {
+      where: {
+        username: req.user.id
+      }
+    }
+  }
+
   var dbUsersEventsAndPostsData = {};
 
+  db.User.findAll(where).then(function (results) {
+
+   
+    console.log("looking to add user to dashboard page");
+    eventsTableData = {
+         user: results
+    };
+    console.log( eventsTableData);
+    dbUsersEventsAndPostsData.users = results[0];
+    //res.render('dashboard', eventsTableData);
+  });
+//res.redirect("/login");
+ 
+
   db.Posts.findAll().then(function (results) {
-    debugger
+   
     var eventsPostData = {
          events: results
     }
@@ -226,7 +253,7 @@ router.get('/dashboard', function (req, res) {
 
   db.Events.findAll().then(function (results) {
  
-    debugger
+   
     console.log("looking to add Events to dashboard page");
     eventsTableData = {
          events: results
@@ -242,7 +269,7 @@ router.get('/dashboard', function (req, res) {
       res.redirect('/login/?msg='+'not authenticated')
     };
   });
-  debugger
+ 
   
 });
 
