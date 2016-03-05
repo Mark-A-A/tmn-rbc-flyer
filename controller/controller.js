@@ -163,7 +163,7 @@ router.post('/event-registration', function (req, res) {
     console.log(err);
     res.redirect('/register/?msg='+'failed to register event');
   }); 
-})
+});
 
 //Log In
 router.get('/login', function (req, res) {
@@ -180,51 +180,64 @@ router.post('/login', passport.authenticate('local', {
 //router.post('/check', passport.authenticate('local', {
 // }));
 
-// router.get('/dashboard', function (req, res) {
-//   debugger
-//   //res.redirect("/login");
-//   var eventsTableData;
-//   var postsTableData;
-//   console.log("hitting Social's dashboard page");
-//   console.log("req: "+ req)
-//   console.log("res: "+ res)
-//   db.Events.findAll().then(function (results) {
-//      // where: {event_name: event_name}
-//     debugger
-//     console.log("looking to add Events to dashboard page");
-//     eventsTableData = {
-//          events: results
-//     }
-
-//     console.log("eventsTableData: "+ eventsTableData);
-//     res.render('dashboard', eventsTableData);
-//   });
-
-  
-
-// });
 router.get('/dashboard', function (req, res) {
   debugger
   //res.redirect("/login");
-  var eventsTableData;
-  var postsTableData;
-  console.log("hitting Social's dashboard page");
-  console.log("req: "+ req)
-  console.log("res: "+ res)
-  
 
-  db.Posts.findAll().then(function (results) {
+  var dbUsersEventsAndPostsData = {};
+  console.log("hitting Social's dashboard page");
+  console.log("req: "+ req);
+  console.log("res: "+ res);
+  
+  db.User.findAll().then(function (results) {
+     // where: {event_name: event_name}
     debugger
-    console.log("looking to add Posts to dashboard page");
-    
-    postsTableData = {
-        posts: results
-    }
-    res.render('dashboard', postsTableData)
+    console.log("looking to add Events to dashboard page");
+    eventsTableData = {
+         user: results
+    };
+    console.log("eventsTableData: "+ eventsTableData);
+    dbUsersEventsAndPostsData.events = results;
+    //res.render('dashboard', eventsTableData);
   });
 
+  db.Events.findAll().then(function (results) {
+     // where: {event_name: event_name}
+    debugger
+    console.log("looking to add Events to dashboard page");
+    eventsTableData = {
+         events: results
+    };
+    console.log("eventsTableData: "+ eventsTableData);
+    dbEventsAndPostsData.events = results;
+    //res.render('dashboard', eventsTableData);
+  });
+  db.Posts.findAll().then(function (results) {
+    debugger
+     // where: {event_name: event_name}
+    var eventsPostData = {
+         events: results
+    }
+    dbEventsAndPostsData.posts = results;
+    console.log("eventsPostData: "+ eventsPostData);
+  // res.render('dashboard', eventsTableData);
 
+    console.log("dbEventsAndPostsData:"+ dbEventsAndPostsData);
+    res.render('dashboard', dbEventsAndPostsData);
+
+  });
+//   var dbEventsAndPostsData = {
+//     events: eventTableData,
+//     posts: eventsPostData
+//   }
+  debugger
+  console.log("dbEventsAndPostsData"+dbEventsAndPostsData);
+  console.log("dbEventsAndPostsData.events"+dbEventsAndPostsData.events);
+  console.log("dbEventsAndPostsData.posts"+dbEventsAndPostsData.posts);
+  
+  //res.render('dashboard', dbEventsAndPostsData);
 });
+
 
 router.post('/create-post', function (req, res) {
   debugger
