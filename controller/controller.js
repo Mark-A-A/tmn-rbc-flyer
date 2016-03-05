@@ -163,7 +163,7 @@ router.post('/event-registration', function (req, res) {
     console.log(err);
     res.redirect('/register/?msg='+'failed to register event');
   }); 
-})
+});
 
 //Log In
 router.get('/login', function (req, res) {
@@ -176,35 +176,85 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/?msg=Login Credentials do not work'
 }));
 
-
 //check login with db
-
 //router.post('/check', passport.authenticate('local', {
-    
 // }));
 
-
 router.get('/dashboard', function (req, res) {
-  
+  debugger
   //res.redirect("/login");
+
+  var dbUsersEventsAndPostsData = {};
+  console.log("hitting Social's dashboard page");
+  console.log("req: "+ req);
+  console.log("res: "+ res);
   
-   console.log("hitting Social's dashboard page");
-   console.log("req: "+ req)
-   console.log("res: "+ res)
-   db.Events.findAll().then(function (results) {
+  db.User.findAll().then(function (results) {
      // where: {event_name: event_name}
-   
-    var eventsTableData = {
+    debugger
+    console.log("looking to add Events to dashboard page");
+    eventsTableData = {
+         user: results
+    };
+    console.log("eventsTableData: "+ eventsTableData);
+    dbUsersEventsAndPostsData.events = results;
+    //res.render('dashboard', eventsTableData);
+  });
+
+  db.Events.findAll().then(function (results) {
+     // where: {event_name: event_name}
+    debugger
+    console.log("looking to add Events to dashboard page");
+    eventsTableData = {
+         events: results
+    };
+    console.log("eventsTableData: "+ eventsTableData);
+    dbEventsAndPostsData.events = results;
+    //res.render('dashboard', eventsTableData);
+  });
+  db.Posts.findAll().then(function (results) {
+    debugger
+     // where: {event_name: event_name}
+    var eventsPostData = {
          events: results
     }
+    dbEventsAndPostsData.posts = results;
+    console.log("eventsPostData: "+ eventsPostData);
+  // res.render('dashboard', eventsTableData);
 
-  console.log("eventsTableData: "+eventsTableData);
-   res.render('dashboard', eventsTableData);
+    console.log("dbEventsAndPostsData:"+ dbEventsAndPostsData);
+    res.render('dashboard', dbEventsAndPostsData);
+
   });
+//   var dbEventsAndPostsData = {
+//     events: eventTableData,
+//     posts: eventsPostData
+//   }
+  debugger
+  console.log("dbEventsAndPostsData"+dbEventsAndPostsData);
+  console.log("dbEventsAndPostsData.events"+dbEventsAndPostsData.events);
+  console.log("dbEventsAndPostsData.posts"+dbEventsAndPostsData.posts);
+  
+  //res.render('dashboard', dbEventsAndPostsData);
 });
 
 
-router.post('/dashboard/posts:id', function (req, res) {
+router.post('/create-post', function (req, res) {
+  debugger
+  console.log(req.body);
+  db.Posts.create({
+
+  }).then(function (result) {
+    console.log("successful post")
+    res.redirect('/dashboard/?msg='+'posted to wall');
+  }).catch(function (err){
+    console.log(err);
+    res.redirect('/dashboard/?msg='+'failed to post to wall');
+  })
+
+});
+
+router.post('/dashboard/:post_id', function (req, res) {
   debugger
 
   console.log("req.body: " +req.body);
