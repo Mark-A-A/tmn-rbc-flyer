@@ -237,7 +237,7 @@ router.get('/dashboard', function (req, res) {
 
      if(req.isAuthenticated()){
        //res.render('dashboard', eventsTableData);
-       res.render('dashboard', { username: results.username }, dbUsersEventsAndPostsData);
+       res.render('dashboard', dbUsersEventsAndPostsData);
      } else {
       res.redirect('/login/?msg='+'not authenticated')
     };

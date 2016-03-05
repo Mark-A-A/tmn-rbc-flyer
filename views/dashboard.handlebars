@@ -1,14 +1,14 @@
 <!-- Template for User Dashboard Page -->
 
-  <div class="row">
-    <div class="jumbotron-dashboard">
-      <div id="rutgers-banner-registration-login-dashboard">
-        <!-- <img src="/pictures/redbanner-gradiant.png">  -->
-        <!-- <img src="/pictures/livingston-campus.jpg">     -->
-        <h2> Dashboard</h2>
-      </div>
+<div class="row">
+  <div class="jumbotron-dashboard">
+    <div id="rutgers-banner-registration-login-dashboard">
+      <!-- <img src="/pictures/redbanner-gradiant.png">  -->
+      <!-- <img src="/pictures/livingston-campus.jpg">     -->
+      <h2> Dashboard</h2>
     </div>
   </div>
+</div>
 <div class="container">
 
   <!--  src="http://www.clker.com/cliparts/5/3/f/4/1194986284683051133burger_http_www.treebuil_.svg.hi.png" src="https://image-gr.s3.envato.com/files/30857230/Cheeseburger-p.jpg"-->
@@ -22,21 +22,90 @@
 
   <div class="row">
     <div class="col-md-6">
-      <h2>Events</h2>
-
+      <h2>Events Listings:</h2>
+      </br>
       {{#each events}}
-        <div class="row ">
-
-          <!-- <div class="col-md-5">  -->
-            <pre>{{id}}. {{event_name}}  </pre>
-         <!--  </div> -->
+      <div class="row ">
+        <div class="col-md-5"> 
+<!--         <pre>{{id}}. {{event_name}}  </pre> -->
+          <a href="#" data-toggle="modal" data-target="#bannerformmodal">{{event_date}}. {{event_name}}</a>
         </div>
-      {{/each}}
-    </div> <!-- end of column-md-6 -->
+      </div>
+<!--     </div> end of column-md-6 -->
 
+    <div class="modal fade bannerformmodal" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Contact Form</h4>
+            </div>
+            <div class="modal-body">
+             <form id="requestacallform" method="POST" name="requestacallform">
 
-    <div class="dashboard-post">
-      <div class="col-md-6">
+              <div class="form-group">
+                <div class="input-group">                               
+                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <input id="first_name" type="text" class="form-control" placeholder="First Name" name="first_name"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">                               
+                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <input id="last_name" type="text" class="form-control" placeholder="Last Name" name="last_name"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">                               
+                  <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                  <input id="email1" type="text" class="form-control" placeholder="Email" name="email1" onchange="validateEmailAdd();"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">                               
+                  <span class="input-group-addon"><i class="fa fa-group"></i></span>
+                  <input id="company_name_c" type="text" class="form-control" placeholder="Company Name" name="company_name_c"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">                               
+                  <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                  <input id="phone_mobile" type="text" class="form-control" placeholder="Mobile" name="phone_mobile"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+                  <select class="form-control" name="monthly_rental" class="selectpicker">
+                    <option>How many seats do you have available?</option>
+                    <option>10-50</option>
+                    <option>50-100</option>
+                    <option>100-200</option>
+                    <option>200-500</option>
+                    <option>500+</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">                     
+                  <textarea id="description" type="text" name="description"  placeholder="Description"></textarea>
+                </div>
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-blue">Submit</button>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  <div class="dashboard-post">
+    <div class="col-md-6">
       <h2>Posts</h2>
       <div class="row row-form">
         <form action="/create-post" method="POST">
@@ -55,39 +124,40 @@
       </div> <!-- end of row-form -->
       <div class="row row-posts">
         {{#each posts}}
-          <div class="row ">
-            <div class="col-md-5"> 
-              <pre>{{username}}: {{post}}  </pre>
-            </div>
-            <div class="col-md-1">
-              <form action="/dashboard/{{post_id}}" method="POST">
-                <input type="hidden" name="_method" value="DELETE">
-
-                <button type="submit" class="btn btn-lg">Delete Post</button>
-              </form>
-            </div>
-
+        <div class="row ">
+          <div class="col-md-5"> 
+            <pre>{{username}}: {{post}}  </pre>
           </div>
+          <div class="col-md-1">
+            <form action="/dashboard/{{post_id}}" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+
+              <button type="submit" class="btn btn-lg">Delete Post</button>
+            </form>
+          </div>
+
+        </div>
         {{/each}}
       </div> <!-- end of posts row -->
-    
+
     </div> <!--end of col-md-6 -->
   </div><!--end of dashboard-post -->
-    
+
   
 
-  </div> <!-- end of row -->
-  <div class="row">
-    <div class="col-md-12">
-      {{ message }}
-    </div>
+</div> <!-- end of row -->
+<div class="row">
+  <div class="col-md-12">
+    {{ message }}
   </div>
+</div>
    <!-- <div class="row">
     <div class="col-xs-12 col-md-6">
       <input class="datepicker" type="text" placeholder="Try me">
     </div>
   </div> -->
+
   
 </div> <!--  end of container -->
-  
+
 
