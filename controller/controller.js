@@ -80,7 +80,6 @@ router.get('/home', function (req, res){
   res.render('home')
 });
 
-
 //Registration Page
 router.get('/register', function (req, res){
   console.log("Controller.js: hitting register page");
@@ -98,7 +97,7 @@ router.get('/event-registration', function (req, res){
   if(req.isAuthenticated()){
     res.render('event-registration');  
   }else{
-    res.render('/home/?msg='+'not authenticated')
+    res.redirect('/login/?msg='+'not authenticated')
   }
 });
 
@@ -240,7 +239,7 @@ router.get('/dashboard', function (req, res) {
        //res.render('dashboard', eventsTableData);
        res.render('dashboard', dbUsersEventsAndPostsData);
      } else {
-      res.redirect('/home/?msg='+'not authenticated')
+      res.redirect('/login/?msg='+'not authenticated')
     };
   });
   debugger
