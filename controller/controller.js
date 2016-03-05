@@ -285,7 +285,6 @@ router.post('/create-post', function (req, res) {
 });
 
 router.post('/dashboard/:post_id', function (req, res) {
-  debugger
 
   console.log("req.body: " +req.body);
 
