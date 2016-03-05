@@ -97,7 +97,7 @@ router.get('/event-registration', function (req, res){
   if(req.isAuthenticated()){
     res.render('event-registration');  
   }else{
-    res.redirect('/home/?msg='+'not authenticated')
+    res.redirect('/login/?msg='+'not authenticated')
   }
 });
 
@@ -239,7 +239,7 @@ router.get('/dashboard', function (req, res) {
        //res.render('dashboard', eventsTableData);
        res.render('dashboard', { username: results.username }, dbUsersEventsAndPostsData);
      } else {
-      res.redirect('/home/?msg='+'not authenticated')
+      res.redirect('/login/?msg='+'not authenticated')
     };
   });
   debugger
