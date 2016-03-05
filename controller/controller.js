@@ -48,19 +48,18 @@ passport.use(new passportLocal.Strategy(
     }).then(function (user) {
         //check password against hash
         if (user) {
-            bcrypt.compare(password, user.dataValues.password, function(err, user) {
-                if (username) {
+            bcrypt.compare(password, user.dataValues.password, function(err, success) {
+                if (success) {
                   //if password is correct authenticate the user with cookie
                   done(null, { id: username, username: username });
                 } else{
-                  done(null, null);
+                  done(null, false, {message: "Username and Password do not match"});
                 }
             });
         } else {
-            done(null, null);
+            done(null, false, {message: "Username and Password do not match"});
         }
     });
-
 }));
 
 //change the object used to authenticate to a smaller token, and protects the server from attacks
@@ -77,15 +76,50 @@ router.get('/', function (req, res) {
   res.render("home")
 }); //end of home route
 
+router.get('/home', function (req, res){
+  res.render('home')
+});
+
+
 //Registration Page
 router.get('/register', function (req, res){
   console.log("Controller.js: hitting register page");
   res.render('register');
 });
 
+//Login
+router.get('/login', function (req, res) {
+  console.log("Controller: hitting  login page");
+  res.render("login");
+});
+
 //Event Registration
 router.get('/event-registration', function (req, res){
-  res.render('event-registration');
+  if(req.isAuthenticated()){
+    res.render('event-registration');  
+  }else{
+    res.render('/home/?msg='+'not authenticated')
+  }
+});
+
+router.get('/dashboard', function (req, res) {
+  //res.redirect("/login");
+  console.log("hitting Social's dashboard page");
+  console.log("req: "+ req)
+  console.log("res: "+ res)
+  db.Events.findAll().then(function (results) {
+     // where: {event_name: event_name}
+     var eventsTableData = {
+       events: results
+     }
+     console.log("eventsTableData: "+eventsTableData);
+
+     if(req.isAuthenticated()){
+       res.render('dashboard', eventsTableData);
+     }else{
+      res.redirect('/home/?msg='+'not authenticated')
+    };
+  });
 });
 
 // -------Adding information to databases----------
@@ -117,7 +151,7 @@ router.post('/register', function (req, res) {
     
     console.log("successful registration")
     //res.redirect('/success');
-    res.send("you created a user..check db and table");
+    res.redirect('/login');
   }).catch(function (err){
     
     console.log(err);
@@ -165,15 +199,11 @@ router.post('/event-registration', function (req, res) {
   }); 
 });
 
-//Log In
-router.get('/login', function (req, res) {
-  console.log("Controller: hitting  login page");
-  res.render("login");
-});
-
-router.post('/login', passport.authenticate('local', { 
+router.post('/login', 
+  passport.authenticate('local', { 
   successRedirect: '/dashboard',
   failureRedirect: '/?msg=Login Credentials do not work'
+  // failureRedirect: '/login'
 }));
 
 //check authenttication
