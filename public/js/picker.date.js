@@ -1350,5 +1350,11 @@ Picker.extend( 'pickadate', DatePicker )
 
 }));
 
+(function($) {
+    $(function() {
+        $('input.timepicker').timepicker();
+    });
+})(jQuery);
+
 
 
