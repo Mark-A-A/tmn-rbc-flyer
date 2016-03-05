@@ -180,9 +180,35 @@ router.post('/event-registration', function (req, res) {
   }); 
 });
 
+router.post('/login', 
+  passport.authenticate('local', { 
+  successRedirect: '/dashboard',
+  failureRedirect: '/?msg=Login Credentials do not work'
+  // failureRedirect: '/login'
+}));
+
+//check authenttication
+// router.get('/dashboard', function (req,res) {
+//  debugger
+  // res.render('dashboard',);
+// });
+// console.log('App-user:'+ req.user);
+//   var where = {};
+//   if(req.user) {}
+//     where = {
+//       where: {
+//         username: req.user.id
+//       }
+//     };
 
 router.get('/dashboard', function (req, res) {
-  debugger
+  
+// {
+//     user: req.user,
+//     isAuthenticated: req.isAuthenticated(),
+//     msg: req.query.msg,
+//  }
+   
   //res.redirect("/login");
   console.log("hitting Social's dashboard page");
   console.log("req: "+ req)
@@ -200,22 +226,22 @@ router.get('/dashboard', function (req, res) {
 
   var dbUsersEventsAndPostsData = {};
 
-
-
   db.User.findAll(where).then(function (results) {
 
-    debugger
+   
     console.log("looking to add user to dashboard page");
     eventsTableData = {
          user: results
     };
-    console.log("eventsTableData: "+ eventsTableData);
-    dbUsersEventsAndPostsData.users = results;
+    console.log( eventsTableData);
+    dbUsersEventsAndPostsData.users = results[0];
     //res.render('dashboard', eventsTableData);
   });
+//res.redirect("/login");
+ 
 
   db.Posts.findAll().then(function (results) {
-    debugger
+   
     var eventsPostData = {
          events: results
     }
@@ -228,7 +254,7 @@ router.get('/dashboard', function (req, res) {
 
   db.Events.findAll().then(function (results) {
  
-    debugger
+   
     console.log("looking to add Events to dashboard page");
     eventsTableData = {
          events: results
@@ -244,7 +270,7 @@ router.get('/dashboard', function (req, res) {
       res.redirect('/home/?msg='+'not authenticated')
     };
   });
-  debugger
+ 
   
 });
 
@@ -285,8 +311,8 @@ router.get('/dashboard', function (req, res) {
 router.post('/create-post', function (req, res) {
   debugger
   console.log(req.body);
-  console.log("postToAdd: "+req.body.postToAdd);
-  console.log("and the user is..."+req.user)
+  console.log("posToAdd: "+req.body.postToAdd);
+  console.log("and the user is..."+req.body.firstname)
   db.Posts.create({
 
   }).then(function (result) {
@@ -312,25 +338,6 @@ router.post('/dashboard/:post_id', function (req, res) {
     }
   });
   res.redirect('/dashboard');
-});
-
-//passport authentication
-router.post('/login', 
-  passport.authenticate('local', { 
-  successRedirect: '/dashboard',
-  failureRedirect: '/?msg=Login Credentials do not work'
-  // failureRedirect: '/login'
-}));
-
-//check authentication
-router.get('/dashboard', function (req,res) {
-  debugger
-  console.log("rending user variable to dashboard");
-  res.render('dashboard', {
-    user: req.user,
-    isAuthenticated: req.isAuthenticated(),
-    msg: req.query.msg,
- });
 });
 
 module.exports = router;

@@ -7,12 +7,12 @@
 .jumbotron-home {
   background-image: url("/pictures/redbanner-gradiant.png");
   position: relative;
-  padding-top: 15px;
+  padding-top: 65px;
   /*padding-bottom: 0;*/
   /*margin: 0 auto;*/
   margin-bottom: 0px;
- margin-top: 53px;
- height: 125px;
+ /*margin-top: 53px;*/
+ height: 160px;
 }
 
 .jumbotron-dashboard {
