@@ -113,7 +113,7 @@ var Event = connection.define('event',{
 var Post = connection.define('post', {
   user_id: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: { 
       model: 'app-users', 
       key: 'id' 
