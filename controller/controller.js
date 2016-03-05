@@ -102,25 +102,6 @@ router.get('/event-registration', function (req, res){
   }
 });
 
-router.get('/dashboard', function (req, res) {
-  //res.redirect("/login");
-  console.log("hitting Social's dashboard page");
-  console.log("req: "+ req)
-  console.log("res: "+ res)
-  db.Events.findAll().then(function (results) {
-     // where: {event_name: event_name}
-     var eventsTableData = {
-       events: results
-     }
-     console.log("eventsTableData: "+eventsTableData);
-
-     if(req.isAuthenticated()){
-       res.render('dashboard', eventsTableData);
-     }else{
-      res.redirect('/home/?msg='+'not authenticated')
-    };
-  });
-});
 
 // -------Adding information to databases----------
 router.post('/register', function (req, res) {
@@ -207,45 +188,45 @@ router.post('/login',
 }));
 
 //check authenttication
-router.get('/dashboard', function (req,res) {
-  debugger
-  res.render('dashboard',{
-    user: req.user,
-    isAuthenticated: req.isAuthenticated(),
-    msg: req.query.msg,
-  });
-});
+// router.get('/dashboard', function (req,res) {
+//  debugger
+//   res.render('dashboard',{
+//     user: req.user,
+//     isAuthenticated: req.isAuthenticated(),
+//     msg: req.query.msg,
+//  });
+// });
+// console.log('App-user:'+ req.user);
+//   var where = {};
+//   if(req.user) {}
+//     where = {
+//       where: {
+//         username: req.user.id
+//       }
+//     };
 
 router.get('/dashboard', function (req, res) {
-  debugger
+  //res.redirect("/login");
   console.log("hitting Social's dashboard page");
-  console.log("req: "+ req);
-  console.log("res: "+ res);
-  console.log('App-user:'+ req.user);
-  var where = {};
-  if(req.user) {}
-    where = {
-      where: {
-        username: req.user.id
-      }
-    };
-
+  console.log("req: "+ req)
+  console.log("res: "+ res)
+ 
   var dbUsersEventsAndPostsData = {};
-  
-  db.User.findAll(where).then(function (results) {
-     // where: {event_name: event_name}
+
+  db.Posts.findAll().then(function (results) {
     debugger
-    console.log("looking to add Events to dashboard page");
-    eventsTableData = {
-         user: results
-    };
-    console.log("eventsTableData: "+ eventsTableData);
-    dbUsersEventsAndPostsData.users = results;
-    //res.render('dashboard', eventsTableData);
+    var eventsPostData = {
+         events: results
+    }
+    //add results to variable object
+    dbUsersEventsAndPostsData.posts = results;
+    console.log("eventsPostData: "+ eventsPostData);
+    
+    console.log("dbUsersEventsAndPostsData:"+ dbUsersEventsAndPostsData);
   });
 
   db.Events.findAll().then(function (results) {
-     // where: {event_name: event_name}
+ 
     debugger
     console.log("looking to add Events to dashboard page");
     eventsTableData = {
@@ -254,33 +235,50 @@ router.get('/dashboard', function (req, res) {
     console.log("eventsTableData: "+ eventsTableData);
     dbUsersEventsAndPostsData.events = results;
     //res.render('dashboard', eventsTableData);
-  });
-  db.Posts.findAll().then(function (results) {
-    debugger
-     // where: {event_name: event_name}
-    var eventsPostData = {
-         events: results
-    }
-    dbUsersEventsAndPostsData.posts = results;
-    console.log("eventsPostData: "+ eventsPostData);
-  // res.render('dashboard', eventsTableData);
 
-    console.log("dbUsersEventsAndPostsData:"+ dbUsersEventsAndPostsData);
-    res.render('dashboard', dbEventsAndPostsData);
-
+     if(req.isAuthenticated()){
+       //res.render('dashboard', eventsTableData);
+       res.render('dashboard', dbUsersEventsAndPostsData);
+     } else {
+      res.redirect('/home/?msg='+'not authenticated')
+    };
   });
-//   var dbEventsAndPostsData = {
-//     events: eventTableData,
-//     posts: eventsPostData
-//   }
-   debugger
-  console.log("dbUsersEventsAndPostsData"+dbUsersEventsAndPostsData);
-  console.log("dbUsersEventsAndPostsData.events"+dbUsersEventsAndPostsData.events);
-  console.log("dbUsersEventsAndPostsData.posts"+dbUsersEventsAndPostsData.posts);
-  console.log("dbUsersEventsAndPostsData.posts"+dbUsersEventsAndPostsData.users);
+  debugger
   
-  //res.render('dashboard', dbEventsAndPostsData);
 });
+
+
+//Putting the users   |   from  here to there   ^
+//                    V                         |
+
+
+// router.get('/dashboard', function (req, res) {
+//   debugger
+//   console.log("hitting Social's dashboard page");
+//   console.log("req: "+ req);
+//   console.log("res: "+ res);
+  
+
+//   db.User.findAll(where).then(function (results) {
+//      // where: {event_name: event_name}
+//     debugger
+//     console.log("looking to add Events to dashboard page");
+//     eventsTableData = {
+//          user: results
+//     };
+//     console.log("eventsTableData: "+ eventsTableData);
+//     dbUsersEventsAndPostsData.users = results;
+//     //res.render('dashboard', eventsTableData);
+//   });
+
+//   debugger
+//   console.log("dbUsersEventsAndPostsData"+dbUsersEventsAndPostsData);
+//   console.log("dbUsersEventsAndPostsData.events"+dbUsersEventsAndPostsData.events);
+//   console.log("dbUsersEventsAndPostsData.posts"+dbUsersEventsAndPostsData.posts);
+//   console.log("dbUsersEventsAndPostsData.posts"+dbUsersEventsAndPostsData.users);
+  
+//   //res.render('dashboard', dbEventsAndPostsData);
+// });
 
 
 router.post('/create-post', function (req, res) {
