@@ -4,16 +4,31 @@
   color: white;
 }
 
-.jumbotron {
+.jumbotron-home {
   background-image: url("/pictures/redbanner-gradiant.png");
   position: relative;
-  padding-top: 15px;
+  padding-top: 65px;
   /*padding-bottom: 0;*/
   /*margin: 0 auto;*/
-  
+  margin-bottom: 0px;
+ /*margin-top: 53px;*/
+ height: 160px;
+}
 
-  height: 175px;
-  /*transform:translateY(-25px);*/
+.jumbotron-dashboard {
+  background-image: url("/pictures/redbanner-gradiant.png");
+  position: relative;
+ 
+  /*padding-bottom: 0;*/
+  /*margin: 0 auto;*/
+  margin-bottom: 0px;
+  
+}
+
+#row-jumbotron {
+  
+/*  margin-top: 0;*/
+  position: relative
 }
 
 .jumbtron > img {
@@ -22,10 +37,82 @@
 }
 
 #rutgers-banner > h2 {
+  font-size: 72px;
+  text-align: left;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
+  margin: 0 auto;
+  /*padding-bottom: 10px;*/
+}
+
+/*#rutgers-banner-registration-login-dashboard > h2 {
+  font-family: 'Istok Web', sans-serif;
+  font-weight: 700;
   font-size: 100px;
   text-align: center;
   margin-top: 0 auto;
   margin-bottom: 0 auto;
   margin: 0 auto;
   /*padding-bottom: 10px;*/
+}
+
+.jumbotron-registration-login-dashboard {
+  background-image: url("/pictures/redbanner-gradiant.png");
+  position: relative;
+  padding-top: 15px;
+  /*padding-bottom: 0;*/
+  /*margin: 0 auto;*/
+  /*height: 200px;*/
+  /*transform:translateY(-25px);*/
+}
+
+#rutgers-banner-registration-login-dashboard > h2 {
+  
+  text-align: right;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
+  margin: 0 auto;
+  height: 120px;
+  background-image: url("/pictures/redbanner-gradiant.png");
+  /*padding-bottom: 10px;*/
+}
+
+
+#rutgers-banner-event-registration > h2 {
+  font-family: 'Istok Web', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  color: white;
+  text-align: right;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
+  margin: 0 auto;
+  height: 120px;
+  background-image: url("/pictures/redbanner-gradiant.png");
+  /*padding-bottom: 10px;*/
+  padding-top: 42px;
+  padding-right: 20px
+}
+
+
+
+
+#rutgers-banner-registration-login-dashboard > h2 {
+  font-family: 'Istok Web', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  color: white;
+  text-align: right;
+  margin-top: 30px;
+  margin-bottom: 0 auto;
+  /*margin: 0 auto;*/
+  padding-top: 42px;
+  padding-right: 20px
+}
+
+.dashboard-post {
+  padding-top: 0;
+  padding-left: 15px;
+  padding-bottom: ;
+  margin: 0 auto;
 }

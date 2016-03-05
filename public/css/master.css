@@ -1,12 +1,13 @@
 .row {
   margin-left:0px;
   margin-right:0px;
+  padding-bottom: 40px;
 }
 
 
 html, body {
   height: 100%;
- padding-top:26px;
+  /*padding-top:26px;*/
 }
 
 header {
@@ -14,6 +15,9 @@ header {
   min-height:500px;
 }
 
+.navbar {
+  margin-bottom: 0;
+}
 .navbar-nav {
   margin: 1px 1px;
 }

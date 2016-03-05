@@ -1,74 +1,128 @@
-<!-- Template for Burger Page -->
+<!-- Template for User Dashboard Page -->
+
 <div class="row">
-  <div class="col-md-12">
-    {{ message }}
+  <div class="jumbotron-dashboard">
+    <div id="rutgers-banner-registration-login-dashboard">
+      <!-- <img src="/pictures/redbanner-gradiant.png">  -->
+      <!-- <img src="/pictures/livingston-campus.jpg">     -->
+      <h2> Dashboard</h2>
+    </div>
   </div>
 </div>
-
-<div class="row">
-    <div class="jumbotron">
-      <div id="rutgers-banner">
-        <!-- <img src="/pictures/redbanner-gradiant.png">  -->
-        <!-- <img src="/pictures/livingston-campus.jpg">     -->
-        <h2> Dashboard</h2>
-      </div>
-    </div>
-  </div>
 <div class="container">
-  
- 
   <!--  src="http://www.clker.com/cliparts/5/3/f/4/1194986284683051133burger_http_www.treebuil_.svg.hi.png" src="https://image-gr.s3.envato.com/files/30857230/Cheeseburger-p.jpg"-->
-
-  {{#each burgers}}
-    <div class="row ">
-
-      {{#if devoured}}
-      <div class="col-md-3 col-md-offset-6 devoured"> 
-        <pre>{{id}}. {{burger_name}}  </pre><!-- {{devoured}} --><!-- {{devoured}} {{date}} -->
-      </div>
-      <div class="col-md-1"><!-- col-md-offset-1  -->
-      <!--     <form action="/delete/{{id}}?_method=DELETE" method="POST">
-            <input type="hidden"  name="burgerID"value="DELETE">
-            <input type="hidden" name="_method" value="{{id}}">
-            <button type="submit" class="btn btn-lg">Delete</button>
-          </form> -->
-        <form method="POST" action="/delete/{{id}}" enctype="application/x-www-form-urlencoded">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit">Delete resource</button>
-        </form>
-      </div>
-      {{else}}
-      <div class="col-md-3">
-        <pre>{{id}}. {{burger_name}}  </pre><!-- {{devoured}} --><!-- {{devoured}} {{date}} -->
-      </div>
-      
-      <div class="col-md-1">
-        <form action="/devour/{{id}}" method="POST">
-          <input type="hidden" name="_method" value="POST">
-          <input type="hidden" name="_token" value="{{id}}">
-          <button type="submit" class="btn btn-lg">Eat Your Burger</button>
-        </form>
-      </div>
-      {{/if}}
-
-    </div>
-  {{/each}}
-
-  <form action="/create" method="POST">
+  <div class="welcome-user">
     <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-        <div class="form-group">
-          <label for="exampleInput1">Make a post:</label>
-          <input type="text" name="burgerToAdd" class="form-control" id="exampleInput1" placeholder="Type your post">
+      <div class="col-md-6">
+        <h2>Welcome {{users.username}} </h2>
+      </div>
+    </div>
+  </div> <!-- end of welcome-use section-->
+
+  <div class="row">
+    <div class="col-md-6">
+
+      <h2>Events Listings:</h2>
+    </br>
+    {{#each events}}
+    <div class="row ">
+      <div class="col-md-5"> 
+        <!--         <pre>{{id}}. {{event_name}}  </pre> -->
+        <a href="#" data-toggle="modal" data-target="#bannerformmodal">{{event_date}} {{event_name}}</a>
+
+      </div>
+    </div>
+
+    <div class="modal fade bannerformmodal" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">{{event_name}}</h4>
+            </div>
+            <div class="modal-body">
+              <ul class="list-group">
+                <li class="list-group-item">Start Time: {{start_time}}</li>
+                <li class="list-group-item">End Time: {{end_time}}</li>
+                <li class="list-group-item">Location of Event: {{venue_name}}</li>         
+                <li class="list-group-item">Opening Act: {{artist1}}</li>
+                <li class="list-group-item">Second Artist: {{artist2}}</li>
+                <li class="list-group-item">Headliner: {{artist3}}</li>
+                <li class="list-group-item">Type of Music: {{genre}}</li>
+                <li class="list-group-item">Cost: ${{cost}}</li>
+                <li class="list-group-item">More info: {{event_url}}</li>
+              </ul> 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-blue">Submit</button>
+            </div>          
+          </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-         <button type="submit" class="btn btn-default">Post</button>
-      </div>
-    </div> 
-  </form>
-</div> <!--  end of container -->
+    {{/each}}
+
+    
+
+
+
+  </div> <!-- end of col-md-6r-->
+  <div class="dashboard-post">
+      <div class="col-md-6">
+
+      <!-- <div class="row">
+        <h2>Posts</h2>
+      </div> -->
+      <div class="row row-form">
+        <form action="/create-post" method="POST">
+          <div class="form-group">
+            <div class="col-md-8">
+              <div class="form-group">
+                <!-- <label for="exampleInput1">Make a post:</label> -->
+                <input type="text" name="postToAdd" class="form-control" id="exampleInput1" placeholder="Type your post">
+                  <input type="hidden" name="username" value="{{users.username}}">
+              </div> 
+            </div>
+            <div class="col-md-1 ">
+              <button type="submit" class="btn btn-default">Post to Wall</button>
+            </div>
+          </div> <!-- end of form group -->
+        </form> <!-- end of form -->
+      </div> <!-- end of row-form -->
+      <div class="row row-posts">
+        {{#each posts}}
+
+        <div class="row ">
+          <div class="col-md-8"> 
+            <pre>{{username}}: {{post}}  </pre>
+          </div>
+          <!-- <div class="col-md-1">
+            <form action="/dashboard/{{id}}" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="id" value="{{id}}">
+              <button type="submit" class="btn btn-lg">Delete Post</button>
+            </form>
+          </div> -->
+
+        </div>
+        {{/each}}
+      </div> <!-- end of posts row -->
+
+    </div> <!--end of col-md-6 -->
+  </div><!--end of dashboard-post -->
+  <div class="row">
+    <div class="col-md-12">
+      {{ message }}
+    </div>
+  </div>
+   <!-- <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <input class="datepicker" type="text" placeholder="Try me">
+    </div>
+  </div> -->
+
   
+</div> <!--  end of container -->
+
 

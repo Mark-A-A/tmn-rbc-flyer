@@ -18,3 +18,4 @@ $('#nav .navbar-nav li>a').click(function(){
   var posi = $(link).offset().top;
   $('body,html').animate({scrollTop:posi},700);
 });
+
