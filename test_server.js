@@ -135,7 +135,11 @@ app.get('/register', function(req, res){
   res.render('register');
 });
 
-app.post("/register-info", function(req, res){
+app.get('/login', function(req,res){
+  res.render('login')
+})
+
+app.post("/register", function(req, res){
   User.create(req.body).then(function(result){
     res.redirect('/');
   }).catch(function(err) {
@@ -144,7 +148,14 @@ app.post("/register-info", function(req, res){
   });
 })
 
+var getUser = function (req, res) {
+  User.findAll().then(function (users) {
+    res.send(users);
+  });
+};
+
 connection.sync().then(function() {
+  app.get("/users", getUser);
   app.listen(PORT, function() {
     console.log("Listening on port %s", PORT);
   });
