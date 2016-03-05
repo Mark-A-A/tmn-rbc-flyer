@@ -180,40 +180,39 @@ router.post('/event-registration', function (req, res) {
   }); 
 });
 
-router.post('/login', 
-  passport.authenticate('local', { 
-  successRedirect: '/dashboard',
-  failureRedirect: '/?msg=Login Credentials do not work'
-  // failureRedirect: '/login'
-}));
-
-//check authenttication
-
-// console.log('App-user:'+ req.user);
-//   var where = {};
-//   if(req.user) {}
-//     where = {
-//       where: {
-//         username: req.user.id
-//       }
-//     };
-
-// router.get('/dashboard', function (req,res) {
-//  debugger
-//   res.render('dashboard', {
-//     user: req.user,
-//     isAuthenticated: req.isAuthenticated(),
-//     msg: req.query.msg,
-//  });
-// });
 
 router.get('/dashboard', function (req, res) {
+  debugger
   //res.redirect("/login");
   console.log("hitting Social's dashboard page");
   console.log("req: "+ req)
   console.log("res: "+ res)
- 
+  console.log('user is', req.user);
+  console.log("looking to add user info to page");
+  var where = {};
+  if(req.user) {
+    where = {
+      where: {
+        username: req.user.id
+      }
+    }
+  }
+
   var dbUsersEventsAndPostsData = {};
+
+
+
+  db.User.findAll(where).then(function (results) {
+
+    debugger
+    console.log("looking to add user to dashboard page");
+    eventsTableData = {
+         user: results
+    };
+    console.log("eventsTableData: "+ eventsTableData);
+    dbUsersEventsAndPostsData.users = results;
+    //res.render('dashboard', eventsTableData);
+  });
 
   db.Posts.findAll().then(function (results) {
     debugger
@@ -286,8 +285,8 @@ router.get('/dashboard', function (req, res) {
 router.post('/create-post', function (req, res) {
   debugger
   console.log(req.body);
-  console.log("posToAdd: "+req.body.postToAdd);
-  console.log("and the user is..."+req.body.firstname)
+  console.log("postToAdd: "+req.body.postToAdd);
+  console.log("and the user is..."+req.user)
   db.Posts.create({
 
   }).then(function (result) {
@@ -313,6 +312,25 @@ router.post('/dashboard/:post_id', function (req, res) {
     }
   });
   res.redirect('/dashboard');
+});
+
+//passport authentication
+router.post('/login', 
+  passport.authenticate('local', { 
+  successRedirect: '/dashboard',
+  failureRedirect: '/?msg=Login Credentials do not work'
+  // failureRedirect: '/login'
+}));
+
+//check authentication
+router.get('/dashboard', function (req,res) {
+  debugger
+  console.log("rending user variable to dashboard");
+  res.render('dashboard', {
+    user: req.user,
+    isAuthenticated: req.isAuthenticated(),
+    msg: req.query.msg,
+ });
 });
 
 module.exports = router;
