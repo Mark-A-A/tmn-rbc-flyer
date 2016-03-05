@@ -4,15 +4,22 @@
   color: white;
 }
 
-.jumbotron {
+.jumbotron-home {
   background-image: url("/pictures/redbanner-gradiant.png");
   position: relative;
   padding-top: 15px;
   /*padding-bottom: 0;*/
   /*margin: 0 auto;*/
   margin-bottom: 0px;
+  margin-top: 53px;
   height: 125px;
   /*transform:translateY(-25px);*/
+}
+
+#row-jumbotron {
+  
+/*  margin-top: 0;*/
+  position: relative
 }
 
 .jumbtron > img {
@@ -67,10 +74,10 @@
   font-size: 48px;
   color: white;
   text-align: right;
-  margin-top: 0 auto;
+  margin-top: 30px;
   margin-bottom: 0 auto;
   /*margin: 0 auto;*/
-  padding-top: 30px;
+  padding-top: 42px;
   padding-right: 20px
 }
 

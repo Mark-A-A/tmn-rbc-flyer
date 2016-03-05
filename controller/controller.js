@@ -188,14 +188,7 @@ router.post('/login',
 }));
 
 //check authenttication
-// router.get('/dashboard', function (req,res) {
-//  debugger
-//   res.render('dashboard',{
-//     user: req.user,
-//     isAuthenticated: req.isAuthenticated(),
-//     msg: req.query.msg,
-//  });
-// });
+
 // console.log('App-user:'+ req.user);
 //   var where = {};
 //   if(req.user) {}
@@ -204,6 +197,15 @@ router.post('/login',
 //         username: req.user.id
 //       }
 //     };
+
+// router.get('/dashboard', function (req,res) {
+//  debugger
+//   res.render('dashboard', {
+//     user: req.user,
+//     isAuthenticated: req.isAuthenticated(),
+//     msg: req.query.msg,
+//  });
+// });
 
 router.get('/dashboard', function (req, res) {
   //res.redirect("/login");
