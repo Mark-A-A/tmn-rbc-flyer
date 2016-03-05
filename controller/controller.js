@@ -60,7 +60,6 @@ passport.use(new passportLocal.Strategy(
             done(null, null);
         }
     });
-
 }));
 
 //change the object used to authenticate to a smaller token, and protects the server from attacks
@@ -176,14 +175,6 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/?msg=Login Credentials do not work'
 }));
 
-
-//check login with db
-
-//router.post('/check', passport.authenticate('local', {
-    
-// }));
-
-
 router.get('/dashboard', function (req, res) {
   
   //res.redirect("/login");
@@ -205,7 +196,6 @@ router.get('/dashboard', function (req, res) {
 
 
 router.post('/dashboard/posts:id', function (req, res) {
-  debugger
 
   console.log("req.body: " +req.body);
 
