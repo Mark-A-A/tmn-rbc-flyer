@@ -11,9 +11,18 @@
   /*padding-bottom: 0;*/
   /*margin: 0 auto;*/
   margin-bottom: 0px;
-  margin-top: 53px;
-  height: 125px;
-  /*transform:translateY(-25px);*/
+ margin-top: 53px;
+ height: 125px;
+}
+
+.jumbotron-dashboard {
+  background-image: url("/pictures/redbanner-gradiant.png");
+  position: relative;
+ 
+  /*padding-bottom: 0;*/
+  /*margin: 0 auto;*/
+  margin-bottom: 0px;
+  
 }
 
 #row-jumbotron {
