@@ -48,16 +48,16 @@ passport.use(new passportLocal.Strategy(
     }).then(function (user) {
         //check password against hash
         if (user) {
-            bcrypt.compare(password, user.dataValues.password, function(err, user) {
-                if (username) {
+            bcrypt.compare(password, user.dataValues.password, function(err, success) {
+                if (success) {
                   //if password is correct authenticate the user with cookie
                   done(null, { id: username, username: username });
                 } else{
-                  done(null, null);
+                  done(null, false, {message: "Username and Password do not match"});
                 }
             });
         } else {
-            done(null, null);
+            done(null, false, {message: "Username and Password do not match"});
         }
     });
 }));
@@ -84,7 +84,11 @@ router.get('/register', function (req, res){
 
 //Event Registration
 router.get('/event-registration', function (req, res){
-  res.render('event-registration');
+  if(req.isAuthenticated()){
+    res.render('event-registration');  
+  }else{
+    res.render('/')
+  }
 });
 
 // -------Adding information to databases----------
@@ -116,7 +120,7 @@ router.post('/register', function (req, res) {
     
     console.log("successful registration")
     //res.redirect('/success');
-    res.redirect('/dashboard');
+    res.redirect('/login');
   }).catch(function (err){
     
     console.log(err);
@@ -172,7 +176,8 @@ router.get('/login', function (req, res) {
 
 router.post('/login', passport.authenticate('local', { 
   successRedirect: '/dashboard',
-  failureRedirect: '/?msg=Login Credentials do not work'
+  // failureRedirect: '/?msg=Login Credentials do not work'
+  failureRedirect: '/login'
 }));
 
 router.get('/dashboard', function (req, res) {
