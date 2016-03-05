@@ -80,6 +80,7 @@ router.get('/home', function (req, res){
   res.render('home')
 });
 
+
 //Registration Page
 router.get('/register', function (req, res){
   console.log("Controller.js: hitting register page");
@@ -198,7 +199,8 @@ router.post('/event-registration', function (req, res) {
   }); 
 })
 
-router.post('/login', passport.authenticate('local', { 
+router.post('/login', 
+  passport.authenticate('local', { 
   successRedirect: '/dashboard',
   failureRedirect: '/?msg=Login Credentials do not work'
   // failureRedirect: '/login'
